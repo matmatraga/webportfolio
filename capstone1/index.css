@@ -86,3 +86,24 @@ nav{
 #contact{
 	padding: 80px;
 }
+/* FOOTER SECTION */
+.main-footer{
+	background: black;
+	color: white;
+}
+.main-footer{
+    padding: 80px;
+}
+.main-footer-row-2{
+	width: 40%;
+    order: 1;
+    max-width: 50rem;
+    letter-spacing: 1px;
+}
+.main-footer-row-1{
+	order: 2;
+}
+.main-footer-icon{
+	margin-right: 1.5rem;
+	width: 2rem;
+}
