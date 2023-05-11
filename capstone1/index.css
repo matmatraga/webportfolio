@@ -19,6 +19,10 @@ nav{
 	height: 550px;
 	width: 550px;
 }
+.home{
+	padding: 80px;
+	margin-top: 80px;
+}
 .about{
 	margin-top: 80px;
 	background: rgb(243,243,243);
