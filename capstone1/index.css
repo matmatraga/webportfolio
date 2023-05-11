@@ -1,73 +1,88 @@
-/*CSS Reset*/
 *{
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
+	font-family: 'Roboto', sans-serif;
+	font-family: 'Wix Madefor Display', sans-serif;
+}
+body{
+	height: 100%;
+	font-size: 1rem;
+}
+nav{
+	background: white;
+	box-shadow: 0 10px 100px rgba(0,0,0,.1);
+}
+#landing{
+	margin-top: 3rem;
+	font-size: 1.25rem;
 	color: black;
 }
-
-.navContent{
-	background-color: white;
-	height: 100px;
-}
-
-.navStyle{
-	padding: 1rem 2rem;
-	font-weight: 500px;
-	letter-spacing: 1px;
-	text-transform: uppercase;
-}
-
-.navLogo{
-	width: 50px;
-	height: 50px;
-}
-
-.navItems{
-	padding: 1rem 3rem;
-	font-weight: 500px;
-}
-
-.home{
-	color: #fff;
-	background: linear-gradient(to right,rgba(245,245,245,.8),rgba(245,245,245,.8)),url(https://d33wubrfki0l68.cloudfront.net/daac8858fd4a0ccea44f59dfd079c3c16c263f33/c157c/assets/svg/common-bg.svg);
-	background-position: center;
-	height: 100vh;
-	min-height: 80rem;
-	max-height: 120rem;
-	position: relative;
-
-}
-
-.homeContent {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-90%);
-    max-width: 90rem;
-    width: 80%;
-}
-
-.homeTitle{
-	font-size: 3rem;
-	text-align: center;
-	text-transform: uppercase;
-	font-weight: 500px;
-	padding-top: 32px;
-}
-
-.homeText{
-	font-size: 1rem;
-	text-align: center;
-	line-height: 1;
-	padding-top: 2rem;
-	width: 100%;
-}
-
 .homeImage{
-	height: 300px;
-	width: 300px;
-	margin-left: auto;
-	margin-right: auto;
-	display: block;
+	height: 550px;
+	width: 550px;
+}
+.about{
+	margin-top: 80px;
+	background: rgb(243,243,243);
+	padding: 80px;
+}
+.about-image{
+	width: 550px;
+	height: 550px;
+}
+/* PROJECT SECTION */
+#project{
+	margin:80px 0px;
+}
+.singleProject{
+	background: white;
+	border: 1px solid #eceff8;
+	border-radius: 5px;
+	padding: 25px;
+	margin:25px;
+	transition: all 0.3s ease-out;
+}
+.singleProject .projectIcon{
+	font-size: 60px;
+	color: #754ef9;
+	line-height: 56px;
+}
+.projectContent{
+	margin-top: 11px;
+}
+.projectTitle a{
+	font-size: 22px;
+	font-weight: 600;
+	color: #32333c;
+	margin-bottom: 20px;
+	transition:all 0.4s ease-out;
+	text-decoration: none;
+}
+.projectTitle a:hover{
+	color:#754ef9;
+}
+.singleProject:hover{
+	box-shadow: 0px 21px 0px rgba(152,152,152,0.3);
+
+/* TOOL SECTION	*/
+}
+#tools{
+	margin-top: 80px;
+	background: rgb(243,243,243);
+	padding: 80px;
+}
+.toolsTitle{
+	margin-bottom: 3rem;
+}
+.toolsUsed{
+	padding: 1rem 2rem;
+    margin-bottom: 1.5rem;
+    margin-right: 1.5rem;
+    font-size: 1.6rem;
+    background: rgba(153,153,153,.2);
+    border-radius: 5px;
+    font-weight: 600;
+    color: #666;
+}
+/* CONTACT SECTION */
+#contact{
+	padding: 80px;
 }
