@@ -10,6 +10,10 @@ nav{
 	background: white;
 	box-shadow: 0 10px 100px rgba(0,0,0,.1);
 }
+html{
+	scroll-behavior: smooth;
+}
+/* LANDING SECTION */
 #landing{
 	margin-top: 3rem;
 	font-size: 1.25rem;
@@ -21,10 +25,8 @@ nav{
 }
 .home{
 	padding: 80px;
-	margin-top: 80px;
 }
 .about{
-	margin-top: 80px;
 	background: rgb(243,243,243);
 	padding: 80px;
 }
@@ -34,7 +36,8 @@ nav{
 }
 /* PROJECT SECTION */
 #project{
-	margin:80px 0px;
+	padding: 80px;
+	background: white;
 }
 .singleProject{
 	background: white;
@@ -69,7 +72,6 @@ nav{
 /* TOOL SECTION	*/
 }
 #tools{
-	margin-top: 80px;
 	background: rgb(243,243,243);
 	padding: 80px;
 }
