@@ -34,7 +34,8 @@ html{
 }
 /* PROJECT SECTION */
 #project{
-	margin:80px 0px;
+	margin-top: 80px;
+	padding: 80px;
 }
 .singleProject{
 	background: white;
