@@ -14,27 +14,17 @@ html{
 	scroll-behavior: smooth;
 }
 #landing{
-	margin-top: 3rem;
+	margin-top: 80px;
 	font-size: 1.25rem;
 	color: black;
 	padding: 80px;
 }
-.homeImage{
-	height: 550px;
-	width: 550px;
-}
 .about{
-	margin-top: 80px;
 	background: rgb(243,243,243);
 	padding: 80px;
 }
-.about-image{
-	width: 550px;
-	height: 550px;
-}
 /* PROJECT SECTION */
 #project{
-	margin-top: 80px;
 	padding: 80px;
 }
 .singleProject{
@@ -70,7 +60,6 @@ html{
 /* TOOL SECTION	*/
 }
 #tools{
-	margin-top: 80px;
 	background: rgb(243,243,243);
 	padding: 80px;
 }
