@@ -45,23 +45,24 @@ module.exports.loginUser = (request, response) => {
 	}).catch(error => response.send(error))
 }
 
-module.exports.getProfile = (request, response) => {
-	const userId = request.body.id;
 
-	const userData = auth.decode(request.headers.authorization);
+// module.exports.getProfile = (request, response) => {
+// 	const userId = request.body.id;
 
-	// console.log(userData);
+// 	const userData = auth.decode(request.headers.authorization);
 
-	if(userData.isAdmin){
-		Users.findById(userId)
-		.then(user => {
-			user.password = ""
-			return response.send(user);
-		}).catch(error => response.send(error))
-	}else{
-		return response.send(`Your are not an admin, you don't have access to this route.`)
-	}
-}
+// 	// console.log(userData);
+
+// 	if(userData.isAdmin){
+// 		Users.findById(userId)
+// 		.then(user => {
+// 			user.password = ""
+// 			return response.send(user);
+// 		}).catch(error => response.send(error))
+// 	}else{
+// 		return response.send(`Your are not an admin, you don't have access to this route.`)
+// 	}
+// }
 
 // RETRIEVING USER DETAILS
 module.exports.retrieveUserDetails = (request, response) => {
@@ -70,10 +71,10 @@ module.exports.retrieveUserDetails = (request, response) => {
 
 	const userData = auth.decode(request.headers.authorization);
 
-
 	if(userData.isAdmin && userId){
 		Users.findById(userId)
 		.then(result => {
+			result.password = ""
 			if(!result){
 			return response.send("User ID is not found!")
 			}else{
