@@ -62,3 +62,23 @@ module.exports.getProfile = (request, response) => {
 		return response.send(`Your are not an admin, you don't have access to this route.`)
 	}
 }
+
+// RETRIEVING USER DETAILS
+module.exports.retrieveUserDetails = (request, response) => {
+
+	const userId = request.params.id;
+
+	const userData = auth.decode(request.headers.authorization);
+
+
+	if(userData.isAdmin && userId){
+		Users.findById(userId)
+		.then(result => {
+			if(!result){
+			return response.send("User ID is not found!")
+			}else{
+				return response.send(result)
+			}
+		}).catch(error => response.send(error))
+	}
+}

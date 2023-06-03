@@ -50,7 +50,7 @@ module.exports.getAllActiveProducts = (request, response) => {
 
 module.exports.getSingleProducts = (request, response) => {
 	const productId = request.params.id;
-	console.log(productId);
+	// console.log(productId);
 	if(productId){
 		Product.findById(productId)
 		.then(result => {
@@ -86,5 +86,22 @@ module.exports.updateProductInformation = (request, response) => {
 				return response.send(result);	
 			}
 		}).catch(error => response.send(error))
+	}
+}
+
+// Archive a Product
+module.exports.archiveProduct = (request, response) => {
+	const userData = auth.decode(request.headers.authorization);
+
+
+	const productId = request.params.id;
+	// console.log(productId);
+	if(productId){
+		Product.findByIdAndUpdate(productId, {isActive : false}, {new:true})
+		.then(result => {
+			return response.send(result)
+		}).catch(error => response.send(error))
+	}else{
+		return response.send('Product is not found!')
 	}
 }

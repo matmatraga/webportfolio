@@ -21,4 +21,8 @@ router.get("/products/:id", productControllers.getSingleProducts);
 // Update product information
 router.put("/products/:id", auth.verify, productControllers.updateProductInformation);
 
+// Archive a product
+router.delete("/products/:id", auth.verify, productControllers.archiveProduct);
+
+
 module.exports = router;

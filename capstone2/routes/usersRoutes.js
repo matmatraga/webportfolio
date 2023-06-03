@@ -13,8 +13,9 @@ router.post("/register", usersControllers.registerUser);
 router.get("/login", usersControllers.loginUser);
 
 // Profile Details
-router.get("/profile", auth.verify,usersControllers.getProfile)
+router.get("/profile", auth.verify,usersControllers.getProfile);
 
-
+// Retrive user details
+router.get("/:id", auth.verify, usersControllers.retrieveUserDetails);
 
 module.exports = router;

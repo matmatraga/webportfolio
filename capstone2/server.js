@@ -5,6 +5,7 @@ const cors = require("cors");
 
 const usersRoutes = require("./routes/usersRoutes.js");
 const productRoutes = require("./routes/productRoutes.js");
+const orderRoutes = require("./routes/orderRoutes.js");
 
 const port = 5000;
 
@@ -31,6 +32,7 @@ app.use(cors());
 
 app.use('/users', usersRoutes);
 app.use('/users', productRoutes);
+app.use('/users', orderRoutes);
 
 app.listen(port, () => console.log(`Server is running at port ${port}!`))
 
