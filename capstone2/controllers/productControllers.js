@@ -66,7 +66,6 @@ module.exports.updateProductInformation = (request, response) => {
 
 	const userData = auth.decode(request.headers.authorization);
 
-
 	const productId = request.params.id;
 	const updatedProduct = {
 			name: request.body.name,
@@ -93,15 +92,16 @@ module.exports.updateProductInformation = (request, response) => {
 module.exports.archiveProduct = (request, response) => {
 	const userData = auth.decode(request.headers.authorization);
 
-
 	const productId = request.params.id;
 	// console.log(productId);
-	if(productId){
+	if(userData.isAdmin && productId){
 		Product.findByIdAndUpdate(productId, {isActive : false}, {new:true})
 		.then(result => {
-			return response.send(result)
+			if(!result){
+				return response.send("Product is not found!")
+			}else{
+				return response.send(result);	
+			}
 		}).catch(error => response.send(error))
-	}else{
-		return response.send('Product is not found!')
 	}
 }

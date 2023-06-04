@@ -83,3 +83,24 @@ module.exports.retrieveUserDetails = (request, response) => {
 		}).catch(error => response.send(error))
 	}
 }
+
+// Set user as Admin
+module.exports.setUserAsAdmin = (request, response) => {
+
+	const userId = request.params.id;
+
+	const userData = auth.decode(request.headers.authorization);
+
+	if(userData.isAdmin && userId){
+		Users.findByIdAndUpdate(userId, {isAdmin: true}, {new: true})
+		.then(result => {
+			if(result){
+				return response.send("User is now an admin!")
+			}else{
+				return response.send("User not found!")
+			}
+		}).catch(error => response.send(error))
+	}else{
+		return response.send("Unauthorized access!")
+	}
+}

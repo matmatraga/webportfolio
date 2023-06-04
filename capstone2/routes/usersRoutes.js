@@ -18,4 +18,7 @@ router.get("/login", usersControllers.loginUser);
 // Retrive user details
 router.get("/:id", auth.verify, usersControllers.retrieveUserDetails);
 
+// Set user as an admin
+router.post("/:id/set-admin", auth.verify, usersControllers.setUserAsAdmin);
+
 module.exports = router;

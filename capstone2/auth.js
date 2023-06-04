@@ -25,7 +25,7 @@ module.exports.verify = (request, response, next) => {
 
 		return jwt.verify(token, secret, (error, data) => {
 			if(error){
-				return response.send("Auth failed!")
+				return response.send("Unauthorized access!")
 			}else{
 				
 				next();
