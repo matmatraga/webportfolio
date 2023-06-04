@@ -10,7 +10,7 @@ const router = express.Router();
 router.post("/products", auth.verify, productControllers.createProduct);
 
 // Retrieve all products routes
-router.get("/products", productControllers.getAllProducts);
+router.get("/products/allproducts", productControllers.getAllProducts);
 
 // Retrieve all active products routes
 router.get("/products/active", productControllers.getAllActiveProducts);
@@ -19,10 +19,10 @@ router.get("/products/active", productControllers.getAllActiveProducts);
 router.get("/products/:id", productControllers.getSingleProducts);
 
 // Update product information
-router.put("/products/:id", auth.verify, productControllers.updateProductInformation);
+router.put("/products/:id/updateproduct", auth.verify, productControllers.updateProductInformation);
 
 // Archive a product
-router.delete("/products/:id", auth.verify, productControllers.archiveProduct);
+router.delete("/products/:id/archivedproduct", auth.verify, productControllers.archiveProduct);
 
 
 module.exports = router;

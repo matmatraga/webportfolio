@@ -69,7 +69,7 @@ module.exports.subTotals = (request, response) => {
     .catch((error) => response.send(error));
 };
 
-// Total items
+// Total Amount Items
 
 module.exports.totalPrice = (request, response) => {
   Cart.findById(request.params.id)
