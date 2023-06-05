@@ -42,5 +42,7 @@ module.exports.getAllOrders = (request, response) => {
 				return response.send(orders)
 			}
 		}).catch(error => response.send(error))
+	}else{
+		return response.send("You don't have an access.")
 	}
 }

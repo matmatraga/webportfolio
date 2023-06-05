@@ -23,7 +23,7 @@ module.exports.createProduct = (request, response) => {
 		.catch(error => response.send(error))
 
 	}else{
-		return response.send("Unauthorized!")
+		return response.send("You don't have an access.")
 	}
 
 }
@@ -71,20 +71,15 @@ module.exports.updateProductInformation = (request, response) => {
 			name: request.body.name,
 			description: request.body.description,
 			price: request.body.price,
-			isActive: request.body.isActive
 		};
 
 	if(userData.isAdmin && productId){
-		// console.log(userData)
-		// console.log(productId)
-		Product.findByIdAndUpdate(productId, updatedProduct, {new:true})
+		Product.findByIdAndUpdate(productId, updatedProduct)
 		.then(result => {
-			if(!result){
-				return response.send("Product is not found!")
-			}else{
-				return response.send(result);	
-			}
+			return response.send("Successfully updated!")
 		}).catch(error => response.send(error))
+	}else{
+		return response.send("You don't have an access.")
 	}
 }
 
@@ -103,5 +98,7 @@ module.exports.archiveProduct = (request, response) => {
 				return response.send(result);	
 			}
 		}).catch(error => response.send(error))
+	}else{
+		return response.send("You don't have an access.")
 	}
 }

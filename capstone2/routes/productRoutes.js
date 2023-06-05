@@ -19,7 +19,7 @@ router.get("/products/active", productControllers.getAllActiveProducts);
 router.get("/products/:id", productControllers.getSingleProducts);
 
 // Update product information
-router.put("/products/:id/updateproduct", auth.verify, productControllers.updateProductInformation);
+router.patch("/products/:id/updateproduct", auth.verify, productControllers.updateProductInformation);
 
 // Archive a product
 router.delete("/products/:id/archivedproduct", auth.verify, productControllers.archiveProduct);

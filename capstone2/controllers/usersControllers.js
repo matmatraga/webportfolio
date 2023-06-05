@@ -81,6 +81,8 @@ module.exports.retrieveUserDetails = (request, response) => {
 				return response.send(result)
 			}
 		}).catch(error => response.send(error))
+	}else{
+		return response.send("You don't have an access.")
 	}
 }
 
@@ -101,6 +103,6 @@ module.exports.setUserAsAdmin = (request, response) => {
 			}
 		}).catch(error => response.send(error))
 	}else{
-		return response.send("Unauthorized access!")
+		return response.send("You don't have an access.")
 	}
 }
