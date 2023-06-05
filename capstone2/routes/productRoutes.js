@@ -22,7 +22,7 @@ router.get("/products/:id", productControllers.getSingleProducts);
 router.patch("/products/:id/updateproduct", auth.verify, productControllers.updateProductInformation);
 
 // Archive a product
-router.delete("/products/:id/archivedproduct", auth.verify, productControllers.archiveProduct);
+router.patch("/products/:id/archivedproduct", auth.verify, productControllers.archiveProduct);
 
 
 module.exports = router;

@@ -90,14 +90,9 @@ module.exports.archiveProduct = (request, response) => {
 	const productId = request.params.id;
 	// console.log(productId);
 	if(userData.isAdmin && productId){
-		Product.findByIdAndUpdate(productId, {isActive : false}, {new:true})
-		.then(result => {
-			if(!result){
-				return response.send("Product is not found!")
-			}else{
-				return response.send(result);	
-			}
-		}).catch(error => response.send(error))
+		Product.findByIdAndUpdate(productId, {isActive : request.body.isActive}, {new:true})
+		.then(result => response.send(result))
+		.catch(error => response.send(error))
 	}else{
 		return response.send("You don't have an access.")
 	}
