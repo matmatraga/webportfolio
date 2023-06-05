@@ -61,7 +61,7 @@ module.exports.subTotals = (request, response) => {
     .then((cart) => {
       const subTotals = cart.products.map((product) => {
         const subtotal = product.quantity * product.productId.price;
-        return { name: product.productId.name, subtotal, quantity: product.quantity };
+        return {name: product.productId.name, subtotal, quantity: product.quantity };
       });
 
       response.send(subTotals);

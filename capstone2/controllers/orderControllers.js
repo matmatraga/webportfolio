@@ -1,19 +1,43 @@
 const Order = require("../models/Order.js");
+const Cart = require("../models/Cart.js");
 
 const auth = require("../auth.js");
 // Create Order
-module.exports.createOrder = (request, response) => {
-	
-	const newOrder = new Order ({
-		userId : request.body.userId,
-		products: request.body.products,
-		totalAmount: request.body.totalAmount
-	})
+module.exports.createOrder = (request, response) => {	
+	const userId = request.body.userId;
+	const cartId = request.body.cartId;
+	// const orderId = request.params.id
 
-	newOrder.save()
-	.then(save => response.send(save))
-	.catch(error => response.send(error));
-}
+	Cart.findById(cartId)
+		.populate({
+			path: 'products',
+			populate: {
+				path: 'productId',
+				model: 'Product'
+			}
+		})
+		.then((cart) => {
+			if(!cart){
+				return response.send("Cart not found.");
+			}
+
+			let totalAmount = 40;
+			cart.products.forEach((product) => {
+				totalAmount += (product.quantity * product.productId.price) * 0.12;
+			})
+
+			const newOrder = new Order ({
+				userId : userId,
+				products: cart.products,
+				totalAmount: totalAmount
+			})
+
+			newOrder.save()
+			.then(save => response.send(save))
+			.catch(error => response.send(error));
+
+		}).catch(error => response.send(error));
+};		
 
 // Retrive Login (Authenticated) User's Order
 module.exports.getAuthenticatedUserOrders = (request, response) => {
