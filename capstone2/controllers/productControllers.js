@@ -31,10 +31,16 @@ module.exports.createProduct = (request, response) => {
 // Retrieve all product
 
 module.exports.getAllProducts = (request, response) => {
-	Product.find()
-	.then(result => {
-		response.send(result);
-	}).catch(error => response.send(error))
+
+	const userData = auth.decode(request.headers.authorization);
+	if(userData.isAdmin){
+		Product.find()
+		.then(result => {
+			response.send(result);
+		}).catch(error => response.send(error))
+	}else{
+		return response.send("You don't have an access.")
+	}
 }
 
 // Retrieve all active products
@@ -88,10 +94,22 @@ module.exports.archiveProduct = (request, response) => {
 	const userData = auth.decode(request.headers.authorization);
 
 	const productId = request.params.id;
+
 	// console.log(productId);
 	if(userData.isAdmin && productId){
 		Product.findByIdAndUpdate(productId, {isActive : request.body.isActive})
-		.then(result => response.send("Sucessfully archived!"))
+		.then(result => {
+			if(result){
+				if(result.isActive === request.body.isActive){
+					response.send("Sucessfully archived the product!")
+					console.log(result)
+				} else {
+					response.send("Successfully unarchived the product!")
+				}
+			}else{
+				response.send("Product is not found.")
+			}
+		})	
 		.catch(error => response.send(error))
 	}else{
 		return response.send("You don't have an access.")
