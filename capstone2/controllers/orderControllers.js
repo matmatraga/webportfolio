@@ -21,15 +21,24 @@ module.exports.createOrder = (request, response) => {
 				return response.send("Cart not found.");
 			}
 
-			let totalAmount = 40;
+			let shippingFee = 40;
+			let subTotal = 0;
 			cart.products.forEach((product) => {
-				totalAmount += (product.quantity * product.productId.price) * 0.12;
+				subTotal += (product.quantity * product.productId.price)
 			})
+
+			const salesTax = subTotal * 0.12;
+			const total = salesTax + shippingFee + subTotal;
+
+			const formattedProducts = cart.products.map((product) => ({
+			    productId: product.productId.id,
+			    quantity: product.quantity
+			 }));
 
 			const newOrder = new Order ({
 				userId : userId,
-				products: cart.products,
-				totalAmount: totalAmount
+				products: formattedProducts,
+				totalAmount: total
 			})
 
 			newOrder.save()
