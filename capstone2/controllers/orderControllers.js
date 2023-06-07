@@ -4,10 +4,17 @@ const Cart = require("../models/Cart.js");
 const auth = require("../auth.js");
 // Create Order
 module.exports.createOrder = (request, response) => {	
-	const userId = request.body.userId;
-	const cartId = request.body.cartId;
-	// const orderId = request.params.id
 
+	const cartId = request.body.cartId;
+
+	let userData; 
+
+	try{
+		auth.decode(request.headers.authorization);
+	}catch(error){
+		return response.send(error.message);
+	}
+	
 	Cart.findById(cartId)
 		.populate({
 			path: 'products',
@@ -35,15 +42,19 @@ module.exports.createOrder = (request, response) => {
 			    quantity: product.quantity
 			 }));
 
-			const newOrder = new Order ({
-				userId : userId,
-				products: formattedProducts,
-				totalAmount: total
-			})
+			if(!userData.isAdmin){
+				const newOrder = new Order ({
+					userId : userData.id,
+					products: formattedProducts,
+					totalAmount: total
+				})
 
-			newOrder.save()
-			.then(save => response.send(save))
-			.catch(error => response.send(error));
+				newOrder.save()
+				.then(save => response.send(save))
+				.catch(error => response.send(error));
+			}else{
+				response.send("For non-admin users only!")
+			}
 
 		}).catch(error => response.send(error));
 };		
@@ -52,11 +63,24 @@ module.exports.createOrder = (request, response) => {
 module.exports.getAuthenticatedUserOrders = (request, response) => {
 
 	const orderId = request.params.id;
+	
+	let userData; 
 
-	Order.findById(orderId)
-	.then(orders => {
-		response.send(orders)
-	}).catch(error => response.send(error))
+	try{
+		auth.decode(request.headers.authorization);
+	}catch(error){
+		return response.send(error.message);
+	}
+	
+
+	if(!userData.isAdmin){
+		Order.findById(orderId)
+		.then(orders => {
+			response.send(orders)
+		}).catch(error => response.send(error))
+	}else{
+		return response.send("For non-admin users only!")
+	}
 }
 
 

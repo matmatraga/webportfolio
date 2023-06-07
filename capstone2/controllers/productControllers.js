@@ -33,39 +33,74 @@ module.exports.createProduct = (request, response) => {
 module.exports.getAllProducts = (request, response) => {
 
 	const userData = auth.decode(request.headers.authorization);
+
 	if(userData.isAdmin){
-		Product.find()
+		Product.find({})
 		.then(result => {
 			response.send(result);
 		}).catch(error => response.send(error))
 	}else{
 		return response.send("You don't have an access.")
 	}
-}
+};
 
 // Retrieve all active products
 
 module.exports.getAllActiveProducts = (request, response) => {
-	Product.find({isActive : request.body.isActive})
-	.then(result => {
-		response.send(result);
-	}).catch(error => response.send(error))
+
+	let userData; 
+
+	try{
+		auth.decode(request.headers.authorization);
+	}catch(error){
+		return response.send(error.message);
+	}
+
+
+	if(!userData.isAdmin){
+		Product.find({isActive : request.body.isActive})
+		.then(result => {
+			response.send(result);
+		}).catch(error => response.send(error))
+	}else{
+		return response.send("For non-admin users only!")
+	}
 }
 
 // Retrieve single product
 
 module.exports.getSingleProducts = (request, response) => {
+
 	const productId = request.params.id;
-	// console.log(productId);
-	if(productId){
-		Product.findById(productId)
-		.then(result => {
-			return response.send(result)
-		}).catch(error => response.send(error))
-	}else{
-		return response.send('Product is not found!')
+
+	let userData; 
+
+	try{
+		auth.decode(request.headers.authorization);
+	}catch(error){
+		return response.send(error.message);
 	}
-}
+	
+	if (userData.isAdmin) {
+	    Product.findById(productId)
+		.then(result => {
+		    if (result.isActive) {
+		        response.send(result);
+		    } else {
+		        response.send("Product is active!");
+		    }
+	    }).catch(error => response.send(error));
+	} else {
+	    Product.findOne({ _id: productId, isActive: true })
+		.then(result => {
+		    if (result) {
+		        response.send(result);
+		    } else {
+		        response.send("Product not found or not active!");
+		    }
+	  	}).catch(error => response.send(error));
+	}
+};
 
 // Update product information
 module.exports.updateProductInformation = (request, response) => {
@@ -82,7 +117,11 @@ module.exports.updateProductInformation = (request, response) => {
 	if(userData.isAdmin && productId){
 		Product.findByIdAndUpdate(productId, updatedProduct)
 		.then(result => {
-			return response.send("Successfully updated!")
+			if(result){
+				return response.send("Product is updated!")
+			} else {
+				return response.send("Product is not found!")
+			}
 		}).catch(error => response.send(error))
 	}else{
 		return response.send("You don't have an access.")
@@ -97,11 +136,11 @@ module.exports.archiveProduct = (request, response) => {
 
 	// console.log(productId);
 	if(userData.isAdmin && productId){
-		Product.findByIdAndUpdate(productId, {isActive : request.body.isActive})
+		Product.findByIdAndUpdate(productId, {isActive : request.body.isActive}, {new:true})
 		.then(result => {
 			if(result){
-				if(result.isActive === request.body.isActive){
-					response.send("Sucessfully archived the product!")
+				if(result.isActive === false){
+					response.send("Successfully archived the product!")
 					console.log(result)
 				} else {
 					response.send("Successfully unarchived the product!")

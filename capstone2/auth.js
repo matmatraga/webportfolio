@@ -18,7 +18,7 @@ module.exports.verify = (request, response, next) => {
 	let token = request.headers.authorization;
 	// console.log(token)
 
-	if(token !== undefined){
+	if(token){
 
 		token = token.slice(7, token.length);
 
@@ -38,8 +38,17 @@ module.exports.verify = (request, response, next) => {
 }
 
 // DECRYPTING
-module.exports.decode = (token) => {
-	token = token.slice(7, token.length);
+try{
+	module.exports.decode = (token) => {
 
-	return jwt.decode(token, {complete: true}).payload;
+		if(!token) {
+			throw new Error("No token provided!")
+		}
+
+		token = token.slice(7, token.length);
+
+		return jwt.decode(token, {complete: true}).payload;
+	}
+}catch(err){
+	return response.send("No token provided")
 }
