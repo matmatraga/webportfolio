@@ -82,7 +82,7 @@ module.exports.retrieveUserDetails = (request, response) => {
 			}
 		}).catch(error => response.send(error))
 	}else{
-		return response.send("You don't have an access.")
+		return response.send("For non-users admin")
 	}
 }
 
