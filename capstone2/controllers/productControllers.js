@@ -32,7 +32,13 @@ module.exports.createProduct = (request, response) => {
 
 module.exports.getAllProducts = (request, response) => {
 
-	const userData = auth.decode(request.headers.authorization);
+	let userData; 
+
+	try{
+		userData = auth.decode(request.headers.authorization);
+	}catch(error){
+		return response.send(error.message);
+	}
 
 	if(userData.isAdmin){
 		Product.find({})
@@ -51,7 +57,7 @@ module.exports.getAllActiveProducts = (request, response) => {
 	let userData; 
 
 	try{
-		auth.decode(request.headers.authorization);
+		userData = auth.decode(request.headers.authorization);
 	}catch(error){
 		return response.send(error.message);
 	}
@@ -71,18 +77,16 @@ module.exports.getAllActiveProducts = (request, response) => {
 
 module.exports.getSingleProducts = (request, response) => {
 
-	const productId = request.params.id;
-
 	let userData; 
 
 	try{
-		auth.decode(request.headers.authorization);
+		userData = auth.decode(request.headers.authorization);
 	}catch(error){
 		return response.send(error.message);
 	}
 	
 	if (userData.isAdmin) {
-	    Product.findById(productId)
+	    Product.findOne({_id : request.params.id})
 		.then(result => {
 		    if (result.isActive) {
 		        response.send(result);
@@ -91,7 +95,7 @@ module.exports.getSingleProducts = (request, response) => {
 		    }
 	    }).catch(error => response.send(error));
 	} else {
-	    Product.findOne({ _id: productId, isActive: true })
+	    Product.findOne({ _id: request.params.id, isActive: true })
 		.then(result => {
 		    if (result) {
 		        response.send(result);

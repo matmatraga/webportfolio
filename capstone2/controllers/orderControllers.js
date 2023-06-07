@@ -5,23 +5,23 @@ const auth = require("../auth.js");
 // Create Order
 module.exports.createOrder = (request, response) => {	
 
-	const cartId = request.body.cartId;
-
 	let userData; 
 
 	try{
-		auth.decode(request.headers.authorization);
+		userData = auth.decode(request.headers.authorization);
 	}catch(error){
 		return response.send(error.message);
 	}
 	
-	Cart.findById(cartId)
+
+	if(!userData.isAdmin){
+	Cart.findOne({userId : userData.id})
 		.populate({
 			path: 'products',
 			populate: {
 				path: 'productId',
 				model: 'Product'
-			}
+			},
 		})
 		.then((cart) => {
 			if(!cart){
@@ -42,7 +42,6 @@ module.exports.createOrder = (request, response) => {
 			    quantity: product.quantity
 			 }));
 
-			if(!userData.isAdmin){
 				const newOrder = new Order ({
 					userId : userData.id,
 					products: formattedProducts,
@@ -52,29 +51,27 @@ module.exports.createOrder = (request, response) => {
 				newOrder.save()
 				.then(save => response.send(save))
 				.catch(error => response.send(error));
-			}else{
-				response.send("For non-admin users only!")
-			}
-
-		}).catch(error => response.send(error));
+		})
+		.catch(error => response.send(error));
+	}else{
+		response.send("For non-admin users only!")
+	}
 };		
 
 // Retrive Login (Authenticated) User's Order
 module.exports.getAuthenticatedUserOrders = (request, response) => {
-
-	const orderId = request.params.id;
 	
 	let userData; 
 
 	try{
-		auth.decode(request.headers.authorization);
+		userData = auth.decode(request.headers.authorization);
 	}catch(error){
 		return response.send(error.message);
 	}
 	
 
 	if(!userData.isAdmin){
-		Order.findById(orderId)
+		Order.find({userId : userData.id})
 		.then(orders => {
 			response.send(orders)
 		}).catch(error => response.send(error))

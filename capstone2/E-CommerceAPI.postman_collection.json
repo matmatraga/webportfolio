@@ -44,7 +44,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"email\" : \"admin2@mail.com\",\r\n    \"password\" : \"123456\"\r\n}",
+					"raw": "{\r\n    \"email\" : \"ac@mail.com\",\r\n    \"password\" : \"12345\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -73,7 +73,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "{{admin token}}",
+							"value": "{{non-admin token}}",
 							"type": "string"
 						}
 					]
@@ -81,14 +81,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:5000/users/647ffe2bc6390029f4a96d7c",
+					"raw": "localhost:5000/users/",
 					"host": [
 						"localhost"
 					],
 					"port": "5000",
 					"path": [
 						"users",
-						"647ffe2bc6390029f4a96d7c"
+						""
 					]
 				}
 			},
@@ -102,7 +102,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0N2E4YjRkM2ZmZjNmNmIxYjQyMTYwZSIsImlzQWRtaW4iOnRydWUsImVtYWlsIjoiYWRtaW5AbWFpbC5jb20iLCJpYXQiOjE2ODU4ODgxNDR9.qp4WZG1_IARA9odaA99x2g58afqTs0Hwh5GhUch1v2c",
+							"value": "{{admin token}}",
 							"type": "string"
 						}
 					]
@@ -110,15 +110,15 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "localhost:5000/users/647c9ba2c7674f061a0f34e0/set-admin",
+					"raw": "localhost:5000/users/647ffe34c6390029f4a96d7f/admin",
 					"host": [
 						"localhost"
 					],
 					"port": "5000",
 					"path": [
 						"users",
-						"647c9ba2c7674f061a0f34e0",
-						"set-admin"
+						"647ffe34c6390029f4a96d7f",
+						"admin"
 					]
 				}
 			},
@@ -141,7 +141,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\" : \"Caffeine Free Diet Coke\",\r\n    \"description\" : \"Caffeine-free Diet Coke is the original great taste of Diet Coke, with no caffeine. A great choice for an afternoon or evening beverage.\",\r\n    \"price\" : 60,\r\n    \"isActive\" : \"true\"\r\n}",
+					"raw": "{\r\n    \"name\" : \"Sprite\",\r\n    \"description\" : \"A lemon-lime flavoured soft drink with a crisp, clean taste that gives you the ultimate cut-through refreshment.\",\r\n    \"price\" : 30,\r\n    \"isActive\" : \"true\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -170,7 +170,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0N2M2OTk4M2EyZGFkMWQ5MDBlMzFjMSIsImlzQWRtaW4iOmZhbHNlLCJlbWFpbCI6ImFkbWluMkBtYWlsLmNvbSIsImlhdCI6MTY4NjAyODEzNH0.fdJFHc0LEceg2F4lyyZIX18c_ptKpkOkCRTP7KtSwSM",
+							"value": "{{admin token}}",
 							"type": "string"
 						}
 					]
@@ -203,7 +203,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "",
+							"value": "{{non-admin token}}",
 							"type": "string"
 						}
 					]
@@ -242,7 +242,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "",
+							"value": "{{non-admin token}}",
 							"type": "string"
 						}
 					]
@@ -250,7 +250,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:5000/users/products/647ffefdc6390029f4a96d82",
+					"raw": "localhost:5000/users/products/648037c17dc27b604c3239db",
 					"host": [
 						"localhost"
 					],
@@ -258,7 +258,7 @@
 					"path": [
 						"users",
 						"products",
-						"647ffefdc6390029f4a96d82"
+						"648037c17dc27b604c3239db"
 					]
 				}
 			},
@@ -321,7 +321,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"isActive\" : false\r\n}",
+					"raw": "{\r\n    \"isActive\" : true\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -352,7 +352,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "{{non-admin token}}",
+							"value": "{{non-admin token 2}}",
 							"type": "string"
 						}
 					]
@@ -361,7 +361,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"products\" : [\r\n        {\r\n            \"productId\" : \"647fff8bc6390029f4a96d86\"\r\n        }\r\n    ]\r\n}",
+					"raw": "{\r\n    \"products\" : [\r\n        {\r\n            \"productId\" : \"647ffefdc6390029f4a96d82\"\r\n        },\r\n        {\r\n            \"productId\" : \"647fff8bc6390029f4a96d86\"\r\n        }\r\n    ]\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -390,7 +390,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "{{non-admin token}}",
+							"value": "{{non-admin token 2}}",
 							"type": "string"
 						}
 					]
@@ -406,7 +406,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"products\" : [\r\n        {\r\n            \"productId\" : \"647fff8bc6390029f4a96d86\",\r\n            \"quantity\" : 6\r\n        }\r\n    ]\r\n}",
+					"raw": "{\r\n    \"products\" : [\r\n        {\r\n            \"productId\" : \"647ffefdc6390029f4a96d82\",\r\n            \"quantity\" : 5\r\n        },\r\n        {\r\n            \"productId\" : \"648037c17dc27b604c3239db\",\r\n            \"quantity\" : 2\r\n        }\r\n    ]\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -414,7 +414,7 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:5000/users/cart/64800f70d5402ea229e9b98b",
+					"raw": "localhost:5000/users/cart/quantity",
 					"host": [
 						"localhost"
 					],
@@ -422,7 +422,7 @@
 					"path": [
 						"users",
 						"cart",
-						"64800f70d5402ea229e9b98b"
+						"quantity"
 					]
 				}
 			},
@@ -453,7 +453,7 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:5000/users/cart/64800e6f90042132dd101082/removecart",
+					"raw": "localhost:5000/users/cart/64803a2fa8864c3dbb841e9c/removecart",
 					"host": [
 						"localhost"
 					],
@@ -461,7 +461,7 @@
 					"path": [
 						"users",
 						"cart",
-						"64800e6f90042132dd101082",
+						"64803a2fa8864c3dbb841e9c",
 						"removecart"
 					]
 				}
@@ -470,33 +470,21 @@
 		},
 		{
 			"name": "GET subtotal for each item",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
 				"auth": {
 					"type": "bearer",
 					"bearer": [
 						{
 							"key": "token",
-							"value": "",
+							"value": "{{non-admin token 2}}",
 							"type": "string"
 						}
 					]
 				},
 				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"products\" : [\r\n        {\r\n            \"productId\": \"647c9d16c7674f061a0f34e7\"\r\n        }\r\n    ]\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
 				"url": {
-					"raw": "localhost:5000/users/cart/64800f70d5402ea229e9b98b/subtotal",
+					"raw": "localhost:5000/users/cart/subtotal",
 					"host": [
 						"localhost"
 					],
@@ -504,7 +492,6 @@
 					"path": [
 						"users",
 						"cart",
-						"64800f70d5402ea229e9b98b",
 						"subtotal"
 					]
 				}
@@ -513,33 +500,21 @@
 		},
 		{
 			"name": "GET total price for all items",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
 				"auth": {
 					"type": "bearer",
 					"bearer": [
 						{
 							"key": "token",
-							"value": "",
+							"value": "{{non-admin token 2}}",
 							"type": "string"
 						}
 					]
 				},
 				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"products\" : [\r\n        {\r\n            \"productId\": \"647c9d16c7674f061a0f34e7\"\r\n        }\r\n    ]\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
 				"url": {
-					"raw": "localhost:5000/users/cart/64800f70d5402ea229e9b98b/total",
+					"raw": "localhost:5000/users/cart/total",
 					"host": [
 						"localhost"
 					],
@@ -547,7 +522,6 @@
 					"path": [
 						"users",
 						"cart",
-						"64800f70d5402ea229e9b98b",
 						"total"
 					]
 				}
@@ -562,22 +536,13 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "{{admin token}}",
+							"value": "{{non-admin token 2}}",
 							"type": "string"
 						}
 					]
 				},
 				"method": "POST",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"cartId\" : \"64800f70d5402ea229e9b98b\",\r\n    \"products\" : [\r\n        {\r\n            \"productId\" : \"647fff8bc6390029f4a96d86\"\r\n        }\r\n    ]\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
 				"url": {
 					"raw": "localhost:5000/users/orders",
 					"host": [
@@ -600,7 +565,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "",
+							"value": "{{non-admin token 2}}",
 							"type": "string"
 						}
 					]
@@ -608,7 +573,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:5000/users/orders/648011c2de1becc9509108fc",
+					"raw": "localhost:5000/users/orders/authenticatedorder",
 					"host": [
 						"localhost"
 					],
@@ -616,7 +581,7 @@
 					"path": [
 						"users",
 						"orders",
-						"648011c2de1becc9509108fc"
+						"authenticatedorder"
 					]
 				}
 			},
@@ -630,7 +595,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "",
+							"value": "{{admin token}}",
 							"type": "string"
 						}
 					]
@@ -661,6 +626,10 @@
 		{
 			"key": "admin token",
 			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0N2ZmZTJiYzYzOTAwMjlmNGE5NmQ3YyIsImlzQWRtaW4iOnRydWUsImVtYWlsIjoiYWRtaW5AbWFpbC5jb20iLCJpYXQiOjE2ODYxMTAwNDB9.QojwGLvZfvn10pNt2vLztUh5lZkTJdL6FD9aYJmZxMA"
+		},
+		{
+			"key": "non-admin token 2",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0N2ZmZTM0YzYzOTAwMjlmNGE5NmQ3ZiIsImlzQWRtaW4iOmZhbHNlLCJlbWFpbCI6ImFjQG1haWwuY29tIiwiaWF0IjoxNjg2MTE5Mzk1fQ.TE-XWP0drezOU59mby-E0Tn0hfn5IZOeM6ojhtDKWY0"
 		}
 	]
 }

@@ -7,7 +7,7 @@ module.exports.addedProducts = (request, response) => {
 		let userData; 
 
 		try{
-				auth.decode(request.headers.authorization);
+				userData = auth.decode(request.headers.authorization);
 		}catch(error){
 				return response.send(error.message);
 		}
@@ -34,26 +34,26 @@ module.exports.changeProductQuantities = (request, response) => {
 	let userData; 
 
 	try{
-			auth.decode(request.headers.authorization);
+			userData = auth.decode(request.headers.authorization);
 	}catch(error){
 			return response.send(error.message);
 	}
 	
-	const cart = request.params.id;
-	const updatedProductQuantities = {
-			userId : userData.id,
-			products : request.body.products
-	}
-	
 	if(!userData.isAdmin){
-	Cart.findByIdAndUpdate(cart, updatedProductQuantities, {new:true})
-			.then(result => {
-					if(!result){
-							return response.send("Cart ID is not found!")
-					}else {
-							return response.send("Product quantity has been changed!")
-					}
-			}).catch(error => response.send(error))
+		const updatedProductQuantities = {
+				userId : userData.id,
+				products : request.body.products
+		}
+		
+		Cart.findOneAndUpdate({userId : userData.id}, updatedProductQuantities, {new:true})
+				.then(result => {
+						console.log(result)
+						if(!result){
+								return response.send("Cart not found!")
+						}else {
+								return response.send("Product quantity has been changed!")
+						}
+				}).catch(error => response.send(error))
 	} else {
 			return response.send("For non-admin users only!")
 	}
@@ -65,7 +65,7 @@ module.exports.removeCart = (request, response) => {
 	let userData; 
 
 	try{
-			auth.decode(request.headers.authorization);
+			userData = auth.decode(request.headers.authorization);
 	}catch(error){
 			return response.send(error.message);
 	}
@@ -93,14 +93,14 @@ module.exports.subTotals = (request, response) => {
 	let userData; 
 
 	try{
-			auth.decode(request.headers.authorization);
+			userData = auth.decode(request.headers.authorization);
 	}catch(error){
 			return response.send(error.message);
 	}
 	
 
 	if(!userData.isAdmin){
-	  Cart.findById(request.params.id)
+	  Cart.findOne({userId : userData.id})
 	    .populate({
 	      path: 'products',
 	      populate: {
@@ -121,7 +121,7 @@ module.exports.subTotals = (request, response) => {
   }
 };
 
-// Total Amount Items
+// Total Price for All Items
 
 module.exports.totalPrice = (request, response) => {
 
@@ -129,14 +129,14 @@ module.exports.totalPrice = (request, response) => {
 	let userData; 
 
 	try{
-			auth.decode(request.headers.authorization);
+			userData = auth.decode(request.headers.authorization);
 	}catch(error){
 			return response.send(error.message);
 	}
 	
 
-	if(!userData.isAdmin){
-	  Cart.findById(request.params.id)
+	if(!userData?.isAdmin){
+	  Cart.findOne({userId : userData.id})
 	    .populate({
 	      path: 'products',
 	      populate: {

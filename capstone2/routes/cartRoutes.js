@@ -6,12 +6,12 @@ const router = express.Router();
 
 router.post("/cart", cartControllers.addedProducts);
 
-router.put("/cart/:id", cartControllers.changeProductQuantities);
+router.put("/cart/quantity", cartControllers.changeProductQuantities);
 
 router.delete("/cart/:id/removecart", cartControllers.removeCart);
 
-router.get("/cart/:id/subtotal", cartControllers.subTotals);
+router.get("/cart/subtotal", cartControllers.subTotals);
 
-router.get("/cart/:id/total", cartControllers.totalPrice);
+router.get("/cart/total", cartControllers.totalPrice);
 
 module.exports = router;

@@ -11,7 +11,7 @@ router.post("/orders", orderControllers.createOrder);
 router.get("/orders/allorders", auth.verify, orderControllers.getAllOrders);
 
 // Retrieving authenticated user's orders route
-router.get("/orders/:id", orderControllers.getAuthenticatedUserOrders);
+router.get("/orders/authenticatedorder", orderControllers.getAuthenticatedUserOrders);
 
 
 

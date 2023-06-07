@@ -46,24 +46,6 @@ module.exports.loginUser = (request, response) => {
 }
 
 
-// module.exports.getProfile = (request, response) => {
-// 	const userId = request.body.id;
-
-// 	const userData = auth.decode(request.headers.authorization);
-
-// 	// console.log(userData);
-
-// 	if(userData.isAdmin){
-// 		Users.findById(userId)
-// 		.then(user => {
-// 			user.password = ""
-// 			return response.send(user);
-// 		}).catch(error => response.send(error))
-// 	}else{
-// 		return response.send(`Your are not an admin, you don't have access to this route.`)
-// 	}
-// }
-
 // RETRIEVING USER DETAILS
 module.exports.retrieveUserDetails = (request, response) => {
 
