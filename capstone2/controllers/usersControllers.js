@@ -67,11 +67,11 @@ module.exports.loginUser = (request, response) => {
 // RETRIEVING USER DETAILS
 module.exports.retrieveUserDetails = (request, response) => {
 
-	const userId = request.params.id;
-
 	const userData = auth.decode(request.headers.authorization);
 
-	if(userData.isAdmin && userId){
+	const userId = userData.id;
+
+	if(userData.isAdmin || userId){
 		Users.findById(userId)
 		.then(result => {
 			result.password = ""
@@ -82,7 +82,7 @@ module.exports.retrieveUserDetails = (request, response) => {
 			}
 		}).catch(error => response.send(error))
 	}else{
-		return response.send("For non-users admin")
+		return response.send("You don't have an access admin")
 	}
 }
 
