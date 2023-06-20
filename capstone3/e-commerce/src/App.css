@@ -1,0 +1,13 @@
+/*
+CSS RESET RULE
+*/
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing: border-box;
+}
+
+.cardHighlight{
+  min-height: 100%;
+}
