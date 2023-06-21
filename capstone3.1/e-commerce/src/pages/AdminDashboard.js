@@ -1,0 +1,56 @@
+import React, { useState, useEffect, useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
+import UserContext from '../UserContext';
+import ProductCard from '../components/ProductCard';
+
+export default function AdminDashboard() {
+  const [products, setProducts] = useState([]);
+  const { user, setUser } = useContext(UserContext);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+      fetch(`${process.env.REACT_APP_API_URL}/products/allproducts`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          setProducts(data.map(product => {
+            return(
+              <ProductCard key = {product._id} productProp= {product}/>
+              )
+          }));
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+  }, []);
+
+  const handleCreateProduct = () => {
+    navigate('/createProduct')
+  };
+
+  const handleUpdateProduct = () => {
+    navigate(`/updateProduct`)
+  }
+
+  return (
+    <div>
+      <h1 className="text-center mt-3">Admin Dashboard</h1>
+      <div className="d-flex justify-content-center mt-3">
+        <Button variant="primary" className="me-2" onClick={handleCreateProduct}>
+          Create New Product
+        </Button>
+        <Button variant="primary" className="me-2" onClick={handleUpdateProduct}>
+          Update Product
+        </Button>
+        <Button variant="primary" onClick={() => navigate('/products')}>
+          Show User Orders
+        </Button>
+      </div>
+      {products}
+    </div>
+  );
+}
