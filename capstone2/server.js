@@ -32,7 +32,7 @@ app.use(express.urlencoded({extended:true}));
 app.use(cors());
 
 app.use('/users', usersRoutes);
-app.use('/users', productRoutes);
+app.use('/products', productRoutes);
 app.use('/users', orderRoutes);
 app.use('/users', cartRoutes);
 

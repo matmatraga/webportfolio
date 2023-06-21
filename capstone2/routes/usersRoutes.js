@@ -10,7 +10,7 @@ const router = express.Router();
 router.post("/register", usersControllers.registerUser);
 
 // Login
-router.get("/login", usersControllers.loginUser);
+router.post("/login", usersControllers.loginUser);
 
 // Profile Details
 // router.get("/profile", auth.verify,usersControllers.getProfile);

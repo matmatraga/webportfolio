@@ -7,22 +7,22 @@ const router = express.Router();
 
 // Create product routes
 
-router.post("/products", auth.verify, productControllers.createProduct);
+router.post("/", auth.verify, productControllers.createProduct);
 
 // Retrieve all products routes
-router.get("/products/allproducts", productControllers.getAllProducts);
+router.get("/allproducts", productControllers.getAllProducts);
 
 // Retrieve all active products routes
-router.get("/products/active", productControllers.getAllActiveProducts);
+router.get("/active", productControllers.getAllActiveProducts);
 
 // Retrieve a single product route
-router.get("/products/:id", productControllers.getSingleProducts);
+router.get("/:id", productControllers.getSingleProducts);
 
 // Update product information
-router.patch("/products/:id/updateproduct", auth.verify, productControllers.updateProductInformation);
+router.patch("/:id/updateproduct", auth.verify, productControllers.updateProductInformation);
 
 // Archive a product
-router.patch("/products/:id/archivedproduct", auth.verify, productControllers.archiveProduct);
+router.patch("/:id/archivedproduct", auth.verify, productControllers.archiveProduct);
 
 
 module.exports = router;

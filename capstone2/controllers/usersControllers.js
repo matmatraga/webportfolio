@@ -9,7 +9,7 @@ module.exports.registerUser = (request, response) => {
 	.then(result => {
 
 		if(result.length > 0){
-			return response.send(`${request.body.email} has been taken! Use different email or sign up!`)
+			return response.send(false)
 		}else {
 			let newUser = new Users({
 				email: request.body.email,
@@ -18,11 +18,12 @@ module.exports.registerUser = (request, response) => {
 			})
 
 			newUser.save()
-			.then(saved => response.send(`${request.body.email} is now registered!`))
-			.catch(error => response.send(error))
+			.then(saved => response.send(true))
+			.catch(error => response.send(false))
 		}
+
 	})
-	.catch(error => response.send(error));
+	.catch(error => response.send(false))
 }
 
 // LOGIN (user authentication)
@@ -30,7 +31,7 @@ module.exports.loginUser = (request, response) => {
 	Users.findOne({email : request.body.email})
 	.then(result => {
 		if(!result){
-			return response.send(`${request.body.email} is not yet registered! Please register!`)
+			return response.send(false)
 		}else {
 			const isPasswordCorrect = bcrypt.compareSync(request.body.password, result.password)
 
@@ -39,10 +40,10 @@ module.exports.loginUser = (request, response) => {
 				auth : auth.createAccessToken(result)
 				})
 			}else{
-				return response.send("Please check your Password!")
+				return response.send(false)
 			}
 		}
-	}).catch(error => response.send(error))
+	}).catch(error => response.send(false))
 }
 
 
@@ -58,13 +59,13 @@ module.exports.retrieveUserDetails = (request, response) => {
 		.then(result => {
 			result.password = ""
 			if(!result){
-			return response.send("User ID is not found!")
+			return response.send(false)
 			}else{
-				return response.send(result)
+				return response.send(true)
 			}
-		}).catch(error => response.send(error))
+		}).catch(error => response.send(false))
 	}else{
-		return response.send("You don't have an access admin")
+		return response.send(false)
 	}
 }
 
@@ -79,12 +80,12 @@ module.exports.setUserAsAdmin = (request, response) => {
 		Users.findByIdAndUpdate(userId, {isAdmin: true}, {new: true})
 		.then(result => {
 			if(result){
-				return response.send("User is now an admin!")
+				return response.send(true)
 			}else{
-				return response.send("User not found!")
+				return response.send(false)
 			}
 		}).catch(error => response.send(error))
 	}else{
-		return response.send("You don't have an access.")
+		return response.send(false)
 	}
 }

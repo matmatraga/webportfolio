@@ -38,17 +38,13 @@ module.exports.verify = (request, response, next) => {
 }
 
 // DECRYPTING
-try{
-	module.exports.decode = (token) => {
+module.exports.decode = (token) => {
 
-		if(!token) {
-			throw new Error("No token provided!")
-		}
-
-		token = token.slice(7, token.length);
-
-		return jwt.decode(token, {complete: true}).payload;
+	if(!token) {
+		throw new Error("No token provided!")
 	}
-}catch(err){
-	return response.send("No token provided")
+
+	token = token.slice(7, token.length);
+
+	return jwt.decode(token, {complete: true}).payload;
 }

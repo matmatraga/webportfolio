@@ -70,7 +70,7 @@ module.exports.removeCart = (request, response) => {
 			return response.send(error.message);
 	}
 
-	const cart = request.params.id;
+	const cart  = request.params.id
 	
 	if(!userData.isAdmin){
 	Cart.findByIdAndDelete(cart, {userId : userData.id}, {new:true})

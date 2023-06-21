@@ -19,11 +19,11 @@ module.exports.createProduct = (request, response) => {
 		})
 
 		newProduct.save()
-		.then(save => response.send('Product successfully created!'))
-		.catch(error => response.send(error))
+		.then(save => response.send(true))
+		.catch(error => response.send(false))
 
 	}else{
-		return response.send("You don't have an access.")
+		return response.send(false)
 	}
 
 }
@@ -44,9 +44,9 @@ module.exports.getAllProducts = (request, response) => {
 		Product.find({})
 		.then(result => {
 			response.send(result);
-		}).catch(error => response.send(error))
+		}).catch(error => response.send(false))
 	}else{
-		return response.send("You don't have an access.")
+		return response.send(false)
 	}
 };
 
@@ -64,12 +64,12 @@ module.exports.getAllActiveProducts = (request, response) => {
 
 
 	if(!userData.isAdmin){
-		Product.find({isActive : request.body.isActive})
+		Product.find({isActive : true})
 		.then(result => {
 			response.send(result);
-		}).catch(error => response.send(error))
+		}).catch(error => response.send(false))
 	}else{
-		return response.send("For non-admin users only!")
+		return response.send(false)
 	}
 }
 
@@ -91,7 +91,7 @@ module.exports.getSingleProducts = (request, response) => {
 		    if (result.isActive) {
 		        response.send(result);
 		    } else {
-		        response.send("Product is active!");
+		        response.send(false);
 		    }
 	    }).catch(error => response.send(error));
 	} else {
@@ -100,9 +100,9 @@ module.exports.getSingleProducts = (request, response) => {
 		    if (result) {
 		        response.send(result);
 		    } else {
-		        response.send("Product not found or not active!");
+		        response.send(false);
 		    }
-	  	}).catch(error => response.send(error));
+	  	}).catch(error => response.send(false));
 	}
 };
 
@@ -122,13 +122,13 @@ module.exports.updateProductInformation = (request, response) => {
 		Product.findByIdAndUpdate(productId, updatedProduct)
 		.then(result => {
 			if(result){
-				return response.send("Product is updated!")
+				return response.send(true)
 			} else {
-				return response.send("Product is not found!")
+				return response.send(false)
 			}
-		}).catch(error => response.send(error))
+		}).catch(error => response.send(false))
 	}else{
-		return response.send("You don't have an access.")
+		return response.send(false)
 	}
 }
 
@@ -144,17 +144,17 @@ module.exports.archiveProduct = (request, response) => {
 		.then(result => {
 			if(result){
 				if(result.isActive === false){
-					response.send("Successfully archived the product!")
+					response.send(false)
 					console.log(result)
 				} else {
-					response.send("Successfully unarchived the product!")
+					response.send(true)
 				}
 			}else{
-				response.send("Product is not found.")
+				response.send(false)
 			}
 		})	
-		.catch(error => response.send(error))
+		.catch(error => response.send(false))
 	}else{
-		return response.send("You don't have an access.")
+		return response.send(false)
 	}
 }
