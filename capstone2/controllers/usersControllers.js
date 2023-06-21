@@ -59,9 +59,9 @@ module.exports.retrieveUserDetails = (request, response) => {
 		.then(result => {
 			result.password = ""
 			if(!result){
-			return response.send(false)
+			return response.send(true)
 			}else{
-				return response.send(true)
+				return response.send(false)
 			}
 		}).catch(error => response.send(false))
 	}else{

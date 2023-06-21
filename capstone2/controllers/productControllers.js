@@ -19,7 +19,7 @@ module.exports.createProduct = (request, response) => {
 		})
 
 		newProduct.save()
-		.then(save => response.send(true))
+		.then(save => response.send(save))
 		.catch(error => response.send(false))
 
 	}else{
@@ -122,7 +122,7 @@ module.exports.updateProductInformation = (request, response) => {
 		Product.findByIdAndUpdate(productId, updatedProduct)
 		.then(result => {
 			if(result){
-				return response.send(true)
+				return response.send(result)
 			} else {
 				return response.send(false)
 			}
