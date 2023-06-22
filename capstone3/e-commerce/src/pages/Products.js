@@ -17,15 +17,11 @@ export default function Products() {
     })
       .then((result) => result.json())
       .then((data) => {
-        if (Array.isArray(data)) {
           setProducts(
             data.map((product) => (
               <ProductCard key={product._id} productProp={product} />
             ))
           );
-        } else {
-          setProducts([]);
-        }
       })
       .catch((error) => {
         console.log(error);
