@@ -8,13 +8,7 @@ export default function Products() {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/products/active`, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-        'Content-Type': 'application/json',
-      },
-    })
+    fetch(`${process.env.REACT_APP_API_URL}/products/active`)
       .then((result) => result.json())
       .then((data) => {
           setProducts(
