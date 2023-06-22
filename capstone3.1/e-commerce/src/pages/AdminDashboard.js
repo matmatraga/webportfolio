@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, Navigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import UserContext from '../UserContext';
 import ProductCard from '../components/ProductCard';
@@ -19,7 +19,11 @@ export default function AdminDashboard() {
         .then((data) => {
           setProducts(data.map(product => {
             return(
-              <ProductCard key = {product._id} productProp= {product}/>
+              <ProductCard key = {product._id} productProp= {product} onActivate = {() => {
+                            archive(product._id, true) 
+                        }} onDisable = {() => {
+                            archive(product._id, false)
+                        }} />
               )
           }));
         })
@@ -32,25 +36,20 @@ export default function AdminDashboard() {
     navigate('/createProduct')
   };
 
-  const handleUpdateProduct = () => {
-    navigate(`/updateProduct`)
-  }
-
-  return (
+  return user.isAdmin === true ? (
     <div>
       <h1 className="text-center mt-3">Admin Dashboard</h1>
       <div className="d-flex justify-content-center mt-3">
         <Button variant="primary" className="me-2" onClick={handleCreateProduct}>
           Create New Product
         </Button>
-        <Button variant="primary" className="me-2" onClick={handleUpdateProduct}>
-          Update Product
-        </Button>
-        <Button variant="primary" onClick={() => navigate('/products')}>
+        <Button variant="primary" onClick={() => navigate('/admin/orders')}>
           Show User Orders
         </Button>
       </div>
       {products}
     </div>
+  ) : (
+    <Navigate to="/notFound" />
   );
 }

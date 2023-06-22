@@ -1,115 +1,129 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import {Container, Row, Col, Button, Form} from 'react-bootstrap';  
+import {useState, useEffect, useContext} from 'react';
 
-const UpdateProduct = () => {
-  const { productId } = useParams();
+import UserContext from '../UserContext.js';
+
+import {Link, useNavigate, Navigate, useParams} from 'react-router-dom';
+
+import Swal2 from 'sweetalert2';
+
+export default function UpdateProduct(){
+  
   const [name, setName] = useState('');
-  const [price, setPrice] = useState('');
   const [description, setDescription] = useState('');
+  const [price, setPrice] = useState('');
+  const {user, setUser} = useContext(UserContext);
+  const {productId} = useParams();
+  const navigate = useNavigate();
 
-  // Fetch the product data based on the productId
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/products/${productId}`, {
-      method: 'GET',
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-        'Content-Type': 'application/json',
-      },
+          'Authorization' : `Bearer ${localStorage.getItem('token')}`,
+          'Content-Type' : 'application/json'
+
+        }
     })
-      .then((response) => response.json())
-      .then((data) => {
-        // Update the state with the retrieved product data
-        if (data.name) {
-          setName(data.name);
-        }
-        if (data.price) {
-          setPrice(data.price);
-        }
-        if (data.description) {
-          setDescription(data.description);
-        }
+      .then(result => result.json())
+      .then(data => {
+        setName(data.name);
+        setDescription(data.description);
+        setPrice(data.price)
       })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [productId]);
+  }, [])
 
-  // Handle form submission for updating the product
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  function updateproduct(event){
 
-    const updatedData = {
-      name,
-      price,
-      description,
-    };
+    if(user.isAdmin){
 
-    // Make an API request to update the product
-    fetch(`${process.env.REACT_APP_API_URL}/products/${productId}/updateproduct`, {
-      method: 'PATCH',
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(updatedData),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        // Handle the response from the server
-        console.log(data);
-        // Reset the form
-        setName('');
-        setPrice('');
-        setDescription('');
+      event.preventDefault();
+
+      fetch(`${process.env.REACT_APP_API_URL}/products/${productId}/updateproduct`, {
+        method : 'PATCH',
+        headers: {
+          'Authorization' : `Bearer ${localStorage.getItem('token')}`,
+          'Content-Type' : 'application/json'
+
+        },
+        body: JSON.stringify({
+          name: name,
+          description: description,
+          price: price
+            
+        })
       })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+      .then(result=> result.json())
+      .then(data => {
+        
+        if(data){
+          
+      
+          Swal2.fire({
+            title: 'Sucessful',
+            icon: 'success',
+            text: 'Product Successfully updated'
+          })
 
-     return (
-       <div>
-         <h2>Update Product</h2>
-         <form onSubmit={handleSubmit}>
-           <div>
-             <label htmlFor="productId">Product ID:</label>
-             <input
-               type="text"
-               id="productId"
-               value={productId}
-               readOnly
-             />
-           </div>
-           <div>
-             <label htmlFor="name">Name:</label>
-             <input
-               type="text"
-               id="name"
-               value={name}
-               onChange={(e) => setName(e.target.value)}
-             />
-           </div>
-           <div>
-             <label htmlFor="price">Price:</label>
-             <input
-               type="text"
-               id="price"
-               value={price}
-               onChange={(e) => setPrice(e.target.value)}
-             />
-           </div>
-           <div>
-             <label htmlFor="description">Description:</label>
-             <textarea
-               id="description"
-               value={description}
-               onChange={(e) => setDescription(e.target.value)}
-             ></textarea>
-           </div>
-           <button type="submit">Update</button>
-         </form>
-       </div>
-     );
-   };
+          navigate('/admin')
+        }
+        else{
+          Swal2.fire({
+            title: 'Error',
+            icon: 'error',
+            text: 'Please check details'
+          })
+        }     
+      })  
+    }
+  }
 
-export default UpdateProduct;
+  return(
+    
+    <Container className = 'mt-5'>
+      <Row>
+        <Col className = 'col-6 mx-auto'>
+          <h1 className = 'text-center'>Update Product Information</h1>
+          <Form onSubmit = {event => updateproduct(event)}> 
+
+          
+                <Form.Group className="mb-3 mt-5" controlId="formBasicEmail">
+                  <Form.Label>Product Name</Form.Label>
+                  <Form.Control 
+                    type="text" 
+                    value = {name}
+                    onChange = {event => setName(event.target.value)}
+                    placeholder="Enter Product Name" />
+                </Form.Group>
+
+                <Form.Group className="mb-3" controlId="formBasicPassword">
+                  <Form.Label>Description</Form.Label>
+                  <Form.Control 
+                    type="text" 
+                    value = {description}
+                    onChange = {event => setDescription(event.target.value)}
+                    placeholder="Description" />
+                </Form.Group>
+
+                <Form.Group className="mb-3" controlId="formBasicPassword">
+                  <Form.Label>Price</Form.Label>
+                  <Form.Control 
+                    type="number" 
+                    value = {price}
+                    onChange = {event => setPrice(event.target.value)}
+                    placeholder="Price" />
+                </Form.Group>
+              
+
+                <Button 
+                 variant="primary" 
+                 type="submit"
+                >
+                  Submit
+                </Button>
+              </Form>
+
+        </Col>
+      </Row>
+    </Container>
+  )
+}

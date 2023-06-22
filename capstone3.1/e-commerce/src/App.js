@@ -1,10 +1,12 @@
 import './App.css';
-
-import {useState, useEffect} from 'react';
-
+import { useState, useEffect } from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import AppNavBar from './components/AppNavbar.js';
 import Home from './pages/Home.js';
 import Products from './pages/Products.js';
+import Cart from './pages/Cart.js';
+import Order from './pages/Order.js';
+import ListOrders from './pages/ListOrders.js';
 import AdminDashboard from './pages/AdminDashboard.js';
 import CreateProduct from './pages/CreateProduct.js';
 import UpdateProduct from './pages/UpdateProduct.js';
@@ -13,79 +15,71 @@ import Login from './pages/Login.js';
 import Logout from './pages/Logout.js';
 import NotFound from './pages/NotFound.js';
 import ProductView from './pages/ProductView.js';
-
-//Import UserProvider
-import {UserProvider} from './UserContext.js';
-
+import { UserProvider } from './UserContext.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-//The BrowserRouter component will enable us to simulate page navigation by synchronizing the shown content and the shown URL in the web browser.
-//The Routes component holds all our Route components. It selects which 'Route' component to show based on the url endpoint.
-import {BrowserRouter, Route, Routes} from 'react-router-dom';
-
 function App() {
+  const [user, setUser] = useState({ id: null, isAdmin: null });
 
-  let userDetails = {};
-  useEffect(()=>{
-    if(localStorage.getItem('token') === null){
-      userDetails = {
-        id: null,
-        isAdmin: null
-      }
-    }else{
-        fetch(`${process.env.REACT_APP_API_URL}/users`, {
-          method: 'GET',
-          headers: {
-              Authorization: `Bearer ${localStorage.getItem('token')}`
-          }
+  const getUserDetails = () => {
+    if (localStorage.getItem('token') !== null) {
+      fetch(`${process.env.REACT_APP_API_URL}/users/userDetails`, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
       })
-      .then(result => result.json())
-      .then(data => {
-          userDetails = {
-              id : data._id,
-              isAdmin: data.isAdmin
-          };
-
-      })
+        .then((result) => result.json())
+        .then((data) => {
+          setUser({
+            id: data._id,
+            isAdmin: data.isAdmin,
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      setUser({ id: null, isAdmin: null });
     }
-  }, [])
-  
-  
-  const [user, setUser] = useState(userDetails);
+  };
+
+  useEffect(() => {
+    getUserDetails();
+  }, []);
 
   const unsetUser = () => {
     localStorage.clear();
-  }
-  useEffect(()=> {
+    setUser({ id: null, isAdmin: null });
+  };
+
+  useEffect(() => {
     console.log(user);
     console.log(localStorage.getItem('token'));
-  }, [user])
-
-
-  
+  }, [user]);
 
   return (
-    <UserProvider value = {{user, setUser, unsetUser}}>
-        <BrowserRouter>
-          <AppNavBar />
-            <Routes>
-              <Route path = '/' element = {<Home/>} />
-              <Route path = '/products' element = {<Products/>} />
-              <Route path = '/admin' element = {<AdminDashboard/>} />
-              <Route path = '/createProduct' element = {<CreateProduct/>} />
-              <Route path = '/updateProduct' element = {<UpdateProduct/>} />
-              <Route path = '/register' element = {<Register/>} />
-              <Route path = '/login' element = {<Login/>} />
-              <Route path = '/logout' element = {<Logout/>} />
-              <Route path = '/products/:productId' element = {<ProductView/>}/>
-              <Route path = '*' element = {<NotFound/>} />
-            </Routes>
-        </BrowserRouter>
+    <UserProvider value={{ user, setUser, unsetUser }}>
+      <BrowserRouter>
+        <AppNavBar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/order" element={<Order />} />
+          <Route path="/admin/orders" element={<ListOrders />} />
+          <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/createProduct" element={<CreateProduct />} />
+          <Route path="/products/:productId/updateproduct" element={<UpdateProduct />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/logout" element={<Logout />} />
+          <Route path="/products/:productId" element={<ProductView />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </BrowserRouter>
     </UserProvider>
-    
-
   );
 }
 
 export default App;
-

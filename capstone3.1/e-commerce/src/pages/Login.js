@@ -25,7 +25,7 @@ export default function Login(){
 	const [isDisabled, setIsDisabled] = useState(true);
 
 	const retrieveUserDetails = (token) => {
-		fetch(`${process.env.REACT_APP_API_URL}/users`, {
+		fetch(`${process.env.REACT_APP_API_URL}/users/userDetails`, {
 			method : 'GET',
 			headers : {
 				Authorization : `Bearer ${token}`
@@ -79,7 +79,7 @@ export default function Login(){
 	        			Swal2.fire({
 	        				title : 'Login Successful',
 	        				icon : 'success',
-	        				text : 'Welcome to Zuitt!'
+	        				text : 'Welcome to ASTER soda!'
 	        			})
 
 	        			navigate('/')

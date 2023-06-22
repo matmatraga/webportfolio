@@ -18,7 +18,7 @@ export default function Banner(){
 			<Row>
 				<Col className = 'mt-3 text-center'>
 					<h1>ASTER Soda</h1>
-					<p>Opportunities for everyone,everywhere!</p>
+					<p>Soda drinks for you!</p>
 					<Button as = {Link} to = '/products'>Products</Button>
 				</Col>
 			</Row>

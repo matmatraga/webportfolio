@@ -1,14 +1,15 @@
 import ProductCard from '../components/ProductCard.js';
 import UserContext from '../UserContext';
 import { useState, useEffect, useContext } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
+import {Button} from 'react-bootstrap';
 
-export default function Products() {
+export default function ListOrders() {
   const { user, setUser } = useContext(UserContext);
-  const [products, setProducts] = useState([]);
+  const [orders, setOrders] = useState();
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/products/active`, {
+    fetch(`${process.env.REACT_APP_API_URL}/users/orders/allorders`, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -17,14 +18,11 @@ export default function Products() {
     })
       .then((result) => result.json())
       .then((data) => {
-        if (Array.isArray(data)) {
-          setProducts(
-            data.map((product) => (
-              <ProductCard key={product._id} productProp={product} />
-            ))
-          );
+        if (data) {
+          // console.log(data)
+          setOrders(data)
         } else {
-          setProducts([]);
+          setOrders();
         }
       })
       .catch((error) => {
@@ -32,10 +30,15 @@ export default function Products() {
       });
   }, []);
 
-  return !user.isAdmin && user.id ? (
+  return user.isAdmin ? (
     <>
-      <h1 className="text-center mt-3">Products</h1>
-      {products}
+      <h1 className="text-center mt-3">List of Orders</h1>
+      {orders?.map(order => (<div>
+        <h1>{order._id}</h1>
+        <p>{order.status}</p>
+        <p>{order.purchasedOn}</p>
+      </div>)
+        )}
     </>
   ) : (
   	<Navigate to="/notFound" />

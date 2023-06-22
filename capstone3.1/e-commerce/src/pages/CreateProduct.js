@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+import Swal2 from 'sweetalert2';
+
 export default function CreateProduct() {
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
@@ -8,14 +10,12 @@ export default function CreateProduct() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Create the product object
     const product = {
       name,
       price,
       description,
     };
 
-    // Send the product data to the server for creation
     fetch(`${process.env.REACT_APP_API_URL}/products`, {
       method: 'POST',
       headers: {
@@ -25,17 +25,30 @@ export default function CreateProduct() {
       body: JSON.stringify(product),
     })
       .then((response) => response.json())
-      .then((data) => {
-        // Handle the response from the server
-        console.log(data); // Log the response for debugging
-        // Add any additional logic based on the response
+      .then(data => {
+        if(data){
+          
+      
+          Swal2.fire({
+            title: 'Sucessful',
+            icon: 'success',
+            text: 'Product Successfully created'
+          })
+
+          navigate('/admin')
+        }
+        else{
+          Swal2.fire({
+            title: 'Error',
+            icon: 'error',
+            text: 'Please check details'
+          })
+        }
       })
       .catch((error) => {
         console.log(error);
-        // Handle any errors that occurred during the request
       });
 
-    // Reset the form inputs
     setName('');
     setPrice('');
     setDescription('');
