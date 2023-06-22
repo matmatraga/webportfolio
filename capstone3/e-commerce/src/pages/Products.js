@@ -32,12 +32,11 @@ export default function Products() {
       });
   }, []);
 
-  return !user.isAdmin && user.id ? (
+  return (
     <>
       <h1 className="text-center mt-3">Products</h1>
       {products}
+
     </>
-  ) : (
-  	<Navigate to="/notFound" />
-  );
+  )
 }
