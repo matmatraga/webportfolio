@@ -2,7 +2,7 @@ import ProductCard from '../components/ProductCard.js';
 import UserContext from '../UserContext';
 import { useState, useEffect, useContext } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
-import {Button} from 'react-bootstrap';
+import {Button, Card} from 'react-bootstrap';
 
 export default function ListOrders() {
   const { user, setUser } = useContext(UserContext);
@@ -31,16 +31,19 @@ export default function ListOrders() {
   }, []);
 
   return user.isAdmin ? (
-    <>
-      <h1 className="text-center mt-3">List of Orders</h1>
-      {orders?.map(order => (<div>
-        <h1>{order._id}</h1>
-        <p>{order.status}</p>
-        <p>{order.purchasedOn}</p>
-      </div>)
-        )}
-    </>
-  ) : (
-  	<Navigate to="/notFound" />
-  );
-}
+      <>
+        <h1 className="text-center mt-3">List of Orders</h1>
+        {orders?.map((order) => (
+          <Card key={order._id} className="my-3">
+            <Card.Body>
+              <Card.Title>{order._id}</Card.Title>
+              <Card.Text>Status: {order.status}</Card.Text>
+              <Card.Text>Purchased On: {order.purchasedOn}</Card.Text>
+            </Card.Body>
+          </Card>
+        ))}
+      </>
+    ) : (
+      <Navigate to="/notFound" />
+    );
+  }

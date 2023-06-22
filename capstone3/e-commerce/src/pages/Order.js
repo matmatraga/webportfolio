@@ -18,12 +18,7 @@ export default function Order() {
     })
       .then((result) => result.json())
       .then((data) => {
-        if (data) {
-          // console.log(data)
           setOrder(data)
-        } else {
-          setOrder();
-        }
       })
       .catch((error) => {
         console.log(error);

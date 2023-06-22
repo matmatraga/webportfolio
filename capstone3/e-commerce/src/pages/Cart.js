@@ -66,10 +66,12 @@ export default function Cart() {
           </Card.Body>
         </Card>
       ))}
-      <h2 className="mt-3">Total Price: {cartTotal}</h2>
-      <Button variant="primary" type="submit" onClick={() => navigate("/order")}>
-        Checkout Order
-      </Button>
+      <h2 className="mt-3 text-center">Total Price: {cartTotal}</h2>
+      <div className="text-center">
+        <Button variant="primary" type="submit" onClick={() => navigate("/order")}>
+          Checkout Order
+        </Button>
+      </div>
     </Container>
   ) : (
     <Navigate to="/notFound" />
