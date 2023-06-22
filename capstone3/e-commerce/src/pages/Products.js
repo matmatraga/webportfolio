@@ -9,8 +9,8 @@ export default function Products() {
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/products/active`)
-      .then((result) => result.json())
-      .then((data) => {
+      .then(result => result.json())
+      .then(data => {
           setProducts(
             data.map((product) => (
               <ProductCard key={product._id} productProp={product} />
