@@ -54,23 +54,9 @@ module.exports.getAllProducts = (request, response) => {
 
 module.exports.getAllActiveProducts = (request, response) => {
 
-	let userData; 
-
-	try{
-		userData = auth.decode(request.headers.authorization);
-	}catch(error){
-		return response.send(error.message);
-	}
-
-
-	if(!userData.isAdmin){
 		Product.find({isActive : true})
-		.then(result => {
-			response.send(result);
-		}).catch(error => response.send(false))
-	}else{
-		return response.send(false)
-	}
+		.then(result => response.send(result))
+		.catch(error => response.send(false))
 }
 
 // Retrieve single product
