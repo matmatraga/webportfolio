@@ -142,16 +142,7 @@ module.exports.archiveProduct = (request, response) => {
 	if(userData.isAdmin && productId){
 		Product.findByIdAndUpdate(productId, {isActive : request.body.isActive}, {new:true})
 		.then(result => {
-			if(result){
-				if(result.isActive === false){
-					response.send(false)
-					console.log(result)
-				} else {
-					response.send(true)
-				}
-			}else{
-				response.send(false)
-			}
+			response.send(result)
 		})	
 		.catch(error => response.send(false))
 	}else{

@@ -48,7 +48,7 @@ module.exports.loginUser = (request, response) => {
 
 
 // RETRIEVING USER DETAILS
-module.exports.retrieveUserDetails = (request, response) => {
+module.exports.getProfile = (request, response) => {
 
 	const userData = auth.decode(request.headers.authorization);
 
@@ -88,4 +88,11 @@ module.exports.setUserAsAdmin = (request, response) => {
 	}else{
 		return response.send(false)
 	}
+}
+
+module.exports.retrieveUserDetails = (request, response) => {
+	const userData = auth.decode(request.headers.authorization);
+
+	Users.findOne({_id : userData.id})
+	.then(data => response.send(data));
 }

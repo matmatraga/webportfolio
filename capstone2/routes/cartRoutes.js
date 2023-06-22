@@ -6,9 +6,11 @@ const router = express.Router();
 
 router.post("/cart", cartControllers.addedProducts);
 
+router.get("/cart", cartControllers.getUserCart);
+
 router.put("/cart/quantity", cartControllers.changeProductQuantities);
 
-router.delete("/cart/:id/removecart", cartControllers.removeCart);
+router.delete("/cart/removecart", cartControllers.removeCart);
 
 router.get("/cart/subtotal", cartControllers.subTotals);
 

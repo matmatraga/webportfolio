@@ -2,31 +2,77 @@ const Cart = require("../models/Cart.js");
 const auth = require("../auth.js");
 
 // added products
-module.exports.addedProducts = (request, response) => {
+module.exports.addedProducts = async (request, response) => {
+  const user = auth.decode(request.headers.authorization);
+  if (user.isAdmin) return response.send({ error: 'For non-admin users only!' });
 
-		let userData; 
+    const cart = await Cart.findOne({ userId: user.id });
+    if(!cart){
+    	    const newCart = new Cart({
+    	      userId: user.id,
+    	      products: request.body
+    	    });
+    	    const saveCart = await newCart.save();
+    	    return response.send(saveCart);
+    }
+    let cartProducts = [];
 
-		try{
-				userData = auth.decode(request.headers.authorization);
-		}catch(error){
-				return response.send(error.message);
-		}
+    if (cart?.products) {
+      cartProducts = cart.products;
+    }
 
-	if(!userData.isAdmin){
-			const newCart = new Cart ({
-				userId : userData.id,
-				products : request.body.products
-			})
+    const productIndex = cartProducts.findIndex(
+      (product) => product.productId === request.body.productId
+    );
 
-			newCart.save()
-			.then(save => response.send(save))
-			.catch(error => response.send(error));
-	}else{
+    if (productIndex !== -1) {
+      const currentProduct = cartProducts[productIndex];
+      const updatedProductQuantity = {
+        productId: currentProduct.productId,
+        quantity: currentProduct.quantity + request.body.quantity
+      };
 
-			return response.send("For non-admin users only!")
+      cartProducts[productIndex] = updatedProductQuantity;
+    } else {
+      cartProducts.push(request.body);
+    }
 
+    const updateCart = await Cart.findOneAndUpdate({ userId: user.id }, { products: cartProducts });
+    return response.send(updateCart);
+};
+
+// Get user cart
+
+module.exports.getUserCart = (request, response) => {
+
+	
+	let userData; 
+
+	try{
+		userData = auth.decode(request.headers.authorization);
+	}catch(error){
+		return response.send(error.message);
 	}
-}
+	
+
+	if(!userData?.isAdmin){
+	  Cart.findOne({userId : userData.id})
+	    .populate({
+	      path: 'products',
+	      populate: {
+	        path: 'productId',
+	        model: 'Product'
+	      }
+	    })
+	    .then((cart) => {
+	    	// console.log(cart)
+	      response.send(cart);
+	      
+	    }).catch((error) => response.send(error))
+  }else{
+  	return response.send("For non-admin users only!")
+  }
+};
 
 // Change product quantities
 module.exports.changeProductQuantities = (request, response) => {
@@ -53,7 +99,7 @@ module.exports.changeProductQuantities = (request, response) => {
 						}else {
 								return response.send("Product quantity has been changed!")
 						}
-				}).catch(error => response.send(error))
+				}).catch(error => response.send(false))
 	} else {
 			return response.send("For non-admin users only!")
 	}
@@ -70,7 +116,7 @@ module.exports.removeCart = (request, response) => {
 			return response.send(error.message);
 	}
 
-	const cart  = request.params.id
+	const cart  = request.body.cartId
 	
 	if(!userData.isAdmin){
 	Cart.findByIdAndDelete(cart, {userId : userData.id}, {new:true})
@@ -145,6 +191,7 @@ module.exports.totalPrice = (request, response) => {
 	      }
 	    })
 	    .then((cart) => {
+	    	console.log(cart)
 	      const totalPrice = cart.products.reduce((total,product) => {
 	        const subtotal = product.quantity * product.productId.price;
 	        return total + subtotal;

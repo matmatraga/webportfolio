@@ -16,7 +16,9 @@ router.post("/login", usersControllers.loginUser);
 // router.get("/profile", auth.verify,usersControllers.getProfile);
 
 // Retrive user details
-router.get("/", auth.verify, usersControllers.retrieveUserDetails);
+router.get("/", auth.verify, usersControllers.getProfile);
+
+router.get("/userDetails", auth.verify, usersControllers.retrieveUserDetails);
 
 // Set user as an admin
 router.post("/:id/admin", auth.verify, usersControllers.setUserAsAdmin);
