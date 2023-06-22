@@ -1,5 +1,5 @@
 import Banner from '../components/Banner.js';
-import Highlights from '../components/Highlights.js';
+import Highlights from '../components/Highlight.js';
 
 
 

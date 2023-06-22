@@ -106,7 +106,7 @@ export default function Register() {
         </Col>
       </Row>
     </Container>
-  )  : (
+  ) : (
     <Navigate to="/notFound" />
   );
 }

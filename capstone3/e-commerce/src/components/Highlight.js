@@ -10,10 +10,9 @@ export default function Highlights(){
 					<Card className = 'cardHighlight'>
 					      
 					      <Card.Body>
-					        <Card.Title>Cool Products</Card.Title>
+					        <Card.Title>Quality Sodas!</Card.Title>
 					        <Card.Text>
-					          Some quick example text to build on the card title and make up the
-					          bulk of the card's content.
+					          In Aster, we don't want to provide a not-quality sodas. Quality over quantity!
 					        </Card.Text>
 					        
 					      </Card.Body>
@@ -24,10 +23,9 @@ export default function Highlights(){
 					<Card className = 'cardHighlight'>
 					      
 					      <Card.Body>
-					        <Card.Title>Discounted Price</Card.Title>
+					        <Card.Title>Affordable Sodas!</Card.Title>
 					        <Card.Text>
-					          Some quick example text to build on the card title and make up the
-					          bulk of the card's content.
+					          In Aster, we provide an affordable sodas for people to purchase!
 					        </Card.Text>
 					        
 					      </Card.Body>
@@ -38,10 +36,9 @@ export default function Highlights(){
 					<Card className = "cardHighlight">
 					      
 					      <Card.Body>
-					        <Card.Title>Gamer's Community</Card.Title>
+					        <Card.Title>Fast Delivery!</Card.Title>
 					        <Card.Text>
-					          Some quick example text to build on the card title and make up the
-					          bulk of the card's content.
+					          Expect a fast delivery by 2-3 business days upon ordering.
 					        </Card.Text>
 					        
 					      </Card.Body>
