@@ -21,7 +21,6 @@ export default function UpdateProduct(){
       headers: {
           'Authorization' : `Bearer ${localStorage.getItem('token')}`,
           'Content-Type' : 'application/json'
-
         }
     })
       .then(result => result.json())
