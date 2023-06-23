@@ -1,7 +1,7 @@
 import './App.css';
 import { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import AppNavBar from './components/AppNavbar.js';
+import AppNavBar from './components/AppNavBar.js';
 import Home from './pages/Home.js';
 import Products from './pages/Products.js';
 import Cart from './pages/Cart.js';
