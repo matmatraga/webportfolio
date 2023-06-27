@@ -16,13 +16,13 @@ router.get("/allproducts", productControllers.getAllProducts);
 router.get("/active", productControllers.getAllActiveProducts);
 
 // Retrieve a single product route
-router.get("/:id", productControllers.getSingleProducts);
+router.get("/:productId", productControllers.getSingleProducts);
 
 // Update product information
-router.patch("/:id/updateproduct", auth.verify, productControllers.updateProductInformation);
+router.patch("/:productId/updateproduct", auth.verify, productControllers.updateProductInformation);
 
 // Archive a product
-router.patch("/:id/archivedproduct", auth.verify, productControllers.archiveProduct);
+router.patch("/:productId/archivedproduct", auth.verify, productControllers.archiveProduct);
 
 
 module.exports = router;

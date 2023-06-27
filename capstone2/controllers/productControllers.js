@@ -63,41 +63,21 @@ module.exports.getAllActiveProducts = (request, response) => {
 
 module.exports.getSingleProducts = (request, response) => {
 
-	let userData; 
+	const productId = request.params.productId;
+	console.log(request.params)
+	console.log(productId)
+	Product.findById(productId)
+		.then(result => response.send(result))
+		.catch(error => response.send(error));
 
-	try{
-		userData = auth.decode(request.headers.authorization);
-	}catch(error){
-		return response.send(error.message);
-	}
-	
-	if (userData.isAdmin) {
-	    Product.findOne({_id : request.params.id})
-		.then(result => {
-		    if (result.isActive) {
-		        response.send(result);
-		    } else {
-		        response.send(false);
-		    }
-	    }).catch(error => response.send(error));
-	} else {
-	    Product.findOne({ _id: request.params.id, isActive: true })
-		.then(result => {
-		    if (result) {
-		        response.send(result);
-		    } else {
-		        response.send(false);
-		    }
-	  	}).catch(error => response.send(false));
-	}
-};
+}
 
 // Update product information
 module.exports.updateProductInformation = (request, response) => {
 
 	const userData = auth.decode(request.headers.authorization);
 
-	const productId = request.params.id;
+	const productId = request.params.productId;
 	const updatedProduct = {
 			name: request.body.name,
 			description: request.body.description,
@@ -122,9 +102,8 @@ module.exports.updateProductInformation = (request, response) => {
 module.exports.archiveProduct = (request, response) => {
 	const userData = auth.decode(request.headers.authorization);
 
-	const productId = request.params.id;
+	const productId = request.params.productId;
 
-	// console.log(productId);
 	if(userData.isAdmin && productId){
 		Product.findByIdAndUpdate(productId, {isActive : request.body.isActive}, {new:true})
 		.then(result => {
