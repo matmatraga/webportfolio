@@ -1,4 +1,5 @@
-import { ArrowLeftOutlined, ArrowRightOutlined } from '@material-ui/icons';
+import ArrowLeftOutlinedIcon from '@mui/icons-material/ArrowLeftOutlined';
+import ArrowRightOutlinedIcon from '@mui/icons-material/ArrowRightOutlined';
 import React from 'react'
 import { useState, useContext } from 'react';
 import styled from 'styled-components'
@@ -121,7 +122,7 @@ const Highlight = () => {
 	return (
 		<Container>
 			<Arrow direction="left" onClick={() => handleClick("left")}>
-				<ArrowLeftOutlined />
+				<ArrowLeftOutlinedIcon />
 			</Arrow>
 			<Wrapper slideIndex={slideIndex}>
 				{sliderItems.map((item) => (
@@ -144,7 +145,7 @@ const Highlight = () => {
 				))}
 			</Wrapper>
 			<Arrow direction="right" onClick={() => handleClick("right")}>
-				<ArrowRightOutlined />
+				<ArrowRightOutlinedIcon />
 			</Arrow>
 		</Container>
 	)

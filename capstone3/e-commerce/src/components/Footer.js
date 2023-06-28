@@ -1,4 +1,4 @@
-import { Facebook, Instagram, MailOutline, Phone, Room, Twitter } from "@material-ui/icons";
+import { Facebook, Instagram, MailOutline, Phone, Room, Twitter } from "@mui/icons-material";
 import styled from "styled-components"
 
 const Container = styled.div`
