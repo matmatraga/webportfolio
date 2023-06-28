@@ -34,7 +34,7 @@ export default function ProductView() {
   }, []);
 
   const addToCart = (productId) => {
-    fetch(`${process.env.REACT_APP_API_URL}/users/cart`, {
+    fetch(`${process.env.REACT_APP_API_URL}/carts`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,

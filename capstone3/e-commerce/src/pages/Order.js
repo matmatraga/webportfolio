@@ -1,8 +1,7 @@
-import ProductCard from '../components/ProductCard.js';
 import UserContext from '../UserContext';
 import { useState, useEffect, useContext } from 'react';
 import { Navigate } from 'react-router-dom';
-import { Button, Container, Card } from 'react-bootstrap';
+import { Container, Card } from 'react-bootstrap';
 
 export default function Order() {
   const { user } = useContext(UserContext);
