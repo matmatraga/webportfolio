@@ -6,6 +6,7 @@ export default function CreateProduct() {
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
   const [description, setDescription] = useState('');
+  const [img, setImg] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -14,6 +15,7 @@ export default function CreateProduct() {
       name,
       price,
       description,
+      img
     };
 
     fetch(`${process.env.REACT_APP_API_URL}/products`, {
@@ -26,9 +28,9 @@ export default function CreateProduct() {
     })
       .then((response) => response.json())
       .then(data => {
-        if(data){
-          
-      
+        if (data) {
+
+
           Swal2.fire({
             title: 'Sucessful',
             icon: 'success',
@@ -37,7 +39,7 @@ export default function CreateProduct() {
 
           navigate('/admin')
         }
-        else{
+        else {
           Swal2.fire({
             title: 'Error',
             icon: 'error',
@@ -52,6 +54,7 @@ export default function CreateProduct() {
     setName('');
     setPrice('');
     setDescription('');
+    setImg('');
   };
 
   return (
@@ -83,6 +86,19 @@ export default function CreateProduct() {
                 id="price"
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="img" className="form-label">
+                Image
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                id="img"
+                value={img}
+                onChange={(e) => setImg(e.target.value)}
                 required
               />
             </div>

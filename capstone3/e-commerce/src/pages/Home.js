@@ -1,14 +1,18 @@
-import Banner from '../components/Banner.js';
-import Highlights from '../components/Highlight.js';
+import Announcement from '../components/Announcement.js';
+import AppNavBar from '../components/AppNavBar.js';
+import Footer from '../components/Footer.js';
+import Highlight from '../components/Highlight.js';
+import Newsletter from '../components/Newsletter.js';
 
+export default function Home() {
 
-
-export default function Home(){
-	
-	return(
+	return (
 		<>
-			<Banner/>
-			<Highlights/>
+			<Announcement />
+			<AppNavBar />
+			<Highlight />
+			<Newsletter />
+			<Footer />
 		</>
-		)
+	)
 }

@@ -1,17 +1,20 @@
-import ProductCard from '../components/ProductCard.js';
 import UserContext from '../UserContext';
 import { useState, useEffect, useContext } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
-import { Container, Row, Col, Card, Button } from 'react-bootstrap';
+import { Container, Row, Col, Card, Button, CardGroup } from 'react-bootstrap';
+import AppNavbar from '../components/AppNavBar.js';
+import Announcement from '../components/Announcement.js';
+import Newsletter from '../components/Newsletter.js';
+import Footer from '../components/Footer.js';
 
 export default function Cart() {
-  const { user, setUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const [cart, setCart] = useState();
   const [cartTotal, setCartTotal] = useState();
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/users/cart`, {
+    fetch(`${process.env.REACT_APP_API_URL}/carts`, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -21,8 +24,7 @@ export default function Cart() {
       .then((result) => result.json())
       .then((data) => {
         if (data) {
-          // console.log(data)
-          setCart(data)
+          setCart(data);
         } else {
           setCart();
         }
@@ -30,49 +32,62 @@ export default function Cart() {
       .catch((error) => {
         console.log(error);
       });
-    fetch(`${process.env.REACT_APP_API_URL}/users/cart/total`, {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-          'Content-Type': 'application/json',
-        },
+
+    fetch(`${process.env.REACT_APP_API_URL}/carts/total`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((result) => result.json())
+      .then((data) => {
+        if (data) {
+          setCartTotal(data.totalPrice);
+        } else {
+          setCartTotal(0);
+        }
       })
-        .then((result) => result.json())
-        .then((data) => {
-          if (data) {
-            // console.log(data)
-            setCartTotal(data.totalPrice)
-          } else {
-            setCartTotal(0);
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        })
+      .catch((error) => {
+        console.log(error);
+      });
   }, []);
 
   return !user.isAdmin && user.id ? (
-    <Container>
-      <h1 className="text-center mt-3">Cart</h1>
-      {cart?.products?.map((product) => (
-        <Card key={product.productId._id} className="mt-3">
-          <Card.Body>
-            <Card.Title>{product.productId.name}</Card.Title>
-            <Card.Text>{product.productId.description}</Card.Text>
-            <Card.Text>Quantity: {product.quantity}</Card.Text>
-            <Card.Text>
-              Subtotal: {product.quantity * product.productId.price}
-            </Card.Text>
-          </Card.Body>
-        </Card>
-      ))}
-      <h2 className="mt-3 text-center">Total Price: {cartTotal}</h2>
-      <div className="text-center">
-        <Button variant="primary" type="submit" onClick={() => navigate("/order")}>
-          Checkout Order
-        </Button>
-      </div>
-    </Container>
+    <>
+      <Announcement />
+      <AppNavbar />
+      <Container className="mb-4">
+        <Row lg={2} md={6} xs={12} className="justify-content-center">
+          <Col className="text-center mt-3">
+            <h1>Cart</h1>
+            <CardGroup>
+              {cart?.products?.map((product) => (
+                <Card bg="light" border="dark" key={product.productId?._id} className="mt-3">
+                  <Card.Img variant="top" src={product.productId?.img} />
+                  <Card.Body>
+                    <Card.Title>{product.productId?.name}</Card.Title>
+                    <Card.Text>{product.productId?.description}</Card.Text>
+                    <Card.Text>Quantity: {product.quantity}</Card.Text>
+                    <Card.Text>
+                      Subtotal: {product.quantity * product.productId?.price}
+                    </Card.Text>
+                  </Card.Body>
+                </Card>
+              ))}
+            </CardGroup>
+            <h2 className="mt-3 text-center">Total Price: {cartTotal}</h2>
+            <div className="text-center">
+              <Button variant="dark" type="submit" onClick={() => navigate('/order')}>
+                Checkout Order
+              </Button>
+            </div>
+          </Col>
+        </Row>
+      </Container >
+      <Newsletter />
+      <Footer />
+    </>
   ) : (
     <Navigate to="/notFound" />
   );

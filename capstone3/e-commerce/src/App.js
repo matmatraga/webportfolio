@@ -18,6 +18,7 @@ import ProductView from './pages/ProductView.js';
 import { UserProvider } from './UserContext.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+
 function App() {
   const [user, setUser] = useState({ id: null, isAdmin: null });
 
@@ -61,7 +62,6 @@ function App() {
   return (
     <UserProvider value={{ user, setUser, unsetUser }}>
       <BrowserRouter>
-        <AppNavBar />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<Products />} />

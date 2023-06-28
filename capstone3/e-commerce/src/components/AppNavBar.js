@@ -10,45 +10,48 @@ export default function AppNavBar() {
 
   return (
     <>
-      <Navbar bg="dark" variant="dark">
+      <Navbar expand="lg" bg="dark" variant="dark">
         <Container>
           <Navbar.Brand as={Link} to="/">
             ASTER
           </Navbar.Brand>
-          <Nav className="ms-auto">
-            <Nav.Link as={NavLink} to="/">
-              Home
-            </Nav.Link>
-            {!user.isAdmin && (
-              <Nav.Link as={NavLink} to="/products">
-                Products
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="ms-auto">
+              <Nav.Link as={NavLink} to="/">
+                Home
               </Nav.Link>
-            )}
-            {!user.isAdmin && user.id && (
-              <Nav.Link as={NavLink} to="/cart">
-                Cart
-              </Nav.Link>
-            )}
-            {user.isAdmin && (
-              <Nav.Link as={NavLink} to="/admin">
-                Admin Dashboard
-              </Nav.Link>
-            )}
-            {!user.id ? (
-              <>
-                <Nav.Link as={NavLink} to="/register">
-                  Register
+              {!user.isAdmin && (
+                <Nav.Link as={NavLink} to="/products">
+                  Products
                 </Nav.Link>
-                <Nav.Link as={NavLink} to="/login">
-                  Login
+              )}
+              {!user.isAdmin && user.id && (
+                <Nav.Link as={NavLink} to="/cart">
+                  Cart
                 </Nav.Link>
-              </>
-            ) : (
-              <Nav.Link as={NavLink} to="/logout">
-                Logout
-              </Nav.Link>
-            )}
-          </Nav>
+              )}
+              {user.isAdmin && (
+                <Nav.Link as={NavLink} to="/admin">
+                  Admin Dashboard
+                </Nav.Link>
+              )}
+              {!user.id ? (
+                <>
+                  <Nav.Link as={NavLink} to="/register">
+                    Register
+                  </Nav.Link>
+                  <Nav.Link as={NavLink} to="/login">
+                    Login
+                  </Nav.Link>
+                </>
+              ) : (
+                <Nav.Link as={NavLink} to="/logout">
+                  Logout
+                </Nav.Link>
+              )}
+            </Nav>
+          </Navbar.Collapse>
         </Container>
       </Navbar>
     </>

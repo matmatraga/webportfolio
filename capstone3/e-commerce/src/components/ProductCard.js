@@ -6,7 +6,7 @@ import Swal2 from 'sweetalert2';
 
 export default function ProductCard(props) {
   const { user } = useContext(UserContext);
-  const { _id, name, description, price, isActive } = props.productProp;
+  const { _id, name, img, isActive } = props.productProp;
   const [isUnarchived, setIsUnarchived] = useState(isActive);
 
   const handleDisable = () => {
@@ -14,31 +14,29 @@ export default function ProductCard(props) {
   };
 
   const archive = (productId, isActive) => {
-    // Perform the API request to archive or unarchive the product
     fetch(`${process.env.REACT_APP_API_URL}/products/${productId}/archivedproduct`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
-      body: JSON.stringify({ isActive : isActive }),
+      body: JSON.stringify({ isActive: isActive }),
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data); // Optional: Handle the response data if needed
         setIsUnarchived(data.isActive);
-        if(data === false){
-        	Swal2.fire({
+        if (data === false) {
+          Swal2.fire({
             title: 'Sucessful',
             icon: 'success',
             text: 'Product Successfully archived'
           })
-        }else{
-        	Swal2.fire({
-        	title: 'Sucessful',
+        } else {
+          Swal2.fire({
+            title: 'Sucessful',
             icon: 'success',
             text: 'Product Successfully unarchived'
-            })
+          })
         }
       })
       .catch((error) => {
@@ -60,7 +58,7 @@ export default function ProductCard(props) {
       );
     } else {
       return (
-        <Button as={Link} to={`/products/${_id}`}>
+        <Button variant="dark" as={Link} to={`/products/${_id}`}>
           Details
         </Button>
       );
@@ -68,16 +66,13 @@ export default function ProductCard(props) {
   };
 
   return (
-    <Container>
-      <Row>
-        <Col className="col-12 mt-3 text-center">
-          <Card>
+    <Container className="mb-4">
+      <Row className="justify-content-center">
+        <Col lg={4} md={6} xs={12} className="text-center">
+          <Card border="dark">
+            <Card.Img variant="top" src={img} />
             <Card.Body>
-              <Card.Title className="mb-3">{name}</Card.Title>
-              <Card.Subtitle>Description:</Card.Subtitle>
-              <Card.Text>{description}</Card.Text>
-              <Card.Subtitle>Price:</Card.Subtitle>
-              <Card.Text>PhP {price}</Card.Text>
+              <Card.Title>{name}</Card.Title>
               {renderActionButton()}
             </Card.Body>
           </Card>
