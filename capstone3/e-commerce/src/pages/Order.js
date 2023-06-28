@@ -27,24 +27,24 @@ export default function Order() {
   return !user.isAdmin ? (
     <Container>
       <h1 className="text-center mt-3">Order</h1>
-      <Card className="mt-3 justify-content-center text-center">
-        <Card.Body>
-          <Card.Title>Items Purchased:</Card.Title>
-          <Card.Text>{order?.products && order.products.length}</Card.Text>
-          <Card.Title>Purchased On:</Card.Title>
-          <Card.Text>{order?.purchasedOn}</Card.Text>
-          <Card.Title>Status</Card.Title>
-          <Card.Text>{order?.status}</Card.Text>
-          <Card.Title>Total Amount:</Card.Title>
-          <Card.Text>{order?.totalAmount || 0}</Card.Text>
-        </Card.Body>
-      </Card>
+      {order?.products?.map((product) => (
+        <Card className="mt-3 text-center" key={product._id}>
+          <Card.Body>
+            <Card.Title>Name:</Card.Title>
+            <Card.Text>{product.productId?.name || ''}</Card.Text>
+            <Card.Title>Items Purchased:</Card.Title>
+            <Card.Text>{order?.products && order.products.length}</Card.Text>
+            <Card.Title>Purchased On:</Card.Title>
+            <Card.Text>{order?.purchasedOn}</Card.Text>
+            <Card.Title>Status</Card.Title>
+            <Card.Text>{order?.status}</Card.Text>
+            <Card.Title>Total Amount:</Card.Title>
+            <Card.Text>{order?.totalAmount || 0}</Card.Text>
+          </Card.Body>
+        </Card>
+      ))}
     </Container>
   ) : (
     <Navigate to="/notFound" />
-  );
+  )
 }
-
-
-
-

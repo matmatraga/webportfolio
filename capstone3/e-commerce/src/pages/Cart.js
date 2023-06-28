@@ -53,6 +53,22 @@ export default function Cart() {
       });
   }, []);
 
+  // const checkoutOrder = () => {
+  //   fetch(`${process.env.REACT_APP_API_URL}/carts/removecart`, {
+  //     method: 'DELETE',
+  //     headers: {
+  //       Authorization: `Bearer ${localStorage.getItem('token')}`,
+  //       'Content-Type': 'application/json',
+  //     },
+  //   })
+  //     .then(() => {
+  //       navigate('/order')
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     })
+  // }
+
   return !user.isAdmin && user.id ? (
     <>
       <Announcement />
@@ -61,7 +77,7 @@ export default function Cart() {
         <Row lg={2} md={6} xs={12} className="justify-content-center">
           <Col className="text-center mt-3">
             <h1>Cart</h1>
-            <CardGroup>
+            <CardGroup className="d-flex flex-wrap justify-content-center">
               {cart?.products?.map((product) => (
                 <Card bg="light" border="dark" key={product.productId?._id} className="mt-3">
                   <Card.Img variant="top" src={product.productId?.img} />
