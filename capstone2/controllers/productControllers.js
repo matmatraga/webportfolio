@@ -31,19 +31,13 @@ module.exports.createProduct = (request, response) => {
 
 module.exports.getAllProducts = (request, response) => {
 
-	let userData;
-
-	try {
-		userData = auth.decode(request.headers.authorization);
-	} catch (error) {
-		return response.send(error.message);
-	}
+	const userData = auth.decode(request.headers.authorization);
 
 	if (userData.isAdmin) {
 		Product.find({})
 			.then(result => {
 				response.send(result);
-			}).catch(error => response.send(false))
+			}).catch(error => response.send(error))
 	} else {
 		return response.send(false)
 	}
@@ -55,7 +49,7 @@ module.exports.getAllActiveProducts = (request, response) => {
 
 	Product.find({ isActive: true })
 		.then(result => response.send(result))
-		.catch(error => response.send(false))
+		.catch(error => response.send(error))
 }
 
 // Retrieve single product
@@ -107,7 +101,7 @@ module.exports.archiveProduct = (request, response) => {
 			.then(result => {
 				response.send(result)
 			})
-			.catch(error => response.send(false))
+			.catch(error => response.send(error))
 	} else {
 		return response.send(false)
 	}
