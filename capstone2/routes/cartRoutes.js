@@ -4,16 +4,16 @@ const cartControllers = require("../controllers/cartControllers.js")
 
 const router = express.Router();
 
-router.post("/cart", cartControllers.addedProducts);
+router.post("/", cartControllers.addedProducts);
 
-router.get("/cart", cartControllers.getUserCart);
+router.get("/", cartControllers.getUserCart);
 
-router.put("/cart/quantity", cartControllers.changeProductQuantities);
+router.put("/quantity", cartControllers.changeProductQuantities);
 
-router.delete("/cart/removecart", cartControllers.removeCart);
+router.delete("/removecart", cartControllers.removeCart);
 
-router.get("/cart/subtotal", cartControllers.subTotals);
+router.get("/subtotal", cartControllers.subTotals);
 
-router.get("/cart/total", cartControllers.totalPrice);
+router.get("/total", cartControllers.totalPrice);
 
 module.exports = router;

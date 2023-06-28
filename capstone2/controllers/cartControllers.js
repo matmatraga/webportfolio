@@ -65,7 +65,6 @@ module.exports.getUserCart = (request, response) => {
 	      }
 	    })
 	    .then((cart) => {
-	    	// console.log(cart)
 	      response.send(cart);
 	      
 	    }).catch((error) => response.send(error))
@@ -93,7 +92,6 @@ module.exports.changeProductQuantities = (request, response) => {
 		
 		Cart.findOneAndUpdate({userId : userData.id}, updatedProductQuantities, {new:true})
 				.then(result => {
-						console.log(result)
 						if(!result){
 								return response.send("Cart not found!")
 						}else {
@@ -191,7 +189,6 @@ module.exports.totalPrice = (request, response) => {
 	      }
 	    })
 	    .then((cart) => {
-	    	console.log(cart)
 	      const totalPrice = cart.products.reduce((total,product) => {
 	        const subtotal = product.quantity * product.productId.price;
 	        return total + subtotal;

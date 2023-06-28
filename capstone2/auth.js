@@ -4,8 +4,8 @@ const secret = "E-CommerceAPI";
 
 module.exports.createAccessToken = (user) => {
 	const data = {
-		id : user._id,
-		isAdmin : user.isAdmin,
+		id: user._id,
+		isAdmin: user.isAdmin,
 		email: user.email
 	}
 
@@ -16,22 +16,21 @@ module.exports.createAccessToken = (user) => {
 module.exports.verify = (request, response, next) => {
 
 	let token = request.headers.authorization;
-	// console.log(token)
 
-	if(token){
+	if (token) {
 
 		token = token.slice(7, token.length);
 
 
 		return jwt.verify(token, secret, (error, data) => {
-			if(error){
+			if (error) {
 				return response.send("Unauthorized access!")
-			}else{
-				
+			} else {
+
 				next();
 			}
 		})
-	}else{
+	} else {
 		return response.send("No token provided!")
 	}
 
@@ -39,12 +38,7 @@ module.exports.verify = (request, response, next) => {
 
 // DECRYPTING
 module.exports.decode = (token) => {
-
-	if(!token) {
-		throw new Error("No token provided!")
-	}
-
 	token = token.slice(7, token.length);
 
-	return jwt.decode(token, {complete: true}).payload;
+	return jwt.decode(token, { complete: true }).payload;
 }

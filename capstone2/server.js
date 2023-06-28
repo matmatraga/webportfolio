@@ -13,28 +13,28 @@ const port = 5000;
 const app = express();
 
 // MONGODB CONNECTION
-	mongoose.connect("mongodb+srv://admin:admin@batch288raga.o5oepb3.mongodb.net/E-CommerceAPI?retryWrites=true&w=majority", {
-		useNewUrlParser: true, 
-		useUnifiedTopology: true
-		})
+mongoose.connect("mongodb+srv://admin:admin@batch288raga.o5oepb3.mongodb.net/E-CommerceAPI?retryWrites=true&w=majority", {
+	useNewUrlParser: true,
+	useUnifiedTopology: true
+})
 
-	const db = mongoose.connection;
-		
-		db.on("error", console.error.bind(console, "Error, can't connect to the db!"))
+const db = mongoose.connection;
 
-		db.once("open", () => console.log('Connected to the cloud database!'))
+db.on("error", console.error.bind(console, "Error, can't connect to the db!"))
+
+db.once("open", () => console.log('Connected to the cloud database!'))
 
 // MIDDLEWARES
 
 app.use(express.json());
-app.use(express.urlencoded({extended:true}));
+app.use(express.urlencoded({ extended: true }));
 
 app.use(cors());
 
 app.use('/users', usersRoutes);
 app.use('/products', productRoutes);
-app.use('/users', orderRoutes);
-app.use('/users', cartRoutes);
+app.use('/orders', orderRoutes);
+app.use('/carts', cartRoutes);
 
 app.listen(port, () => console.log(`Server is running at port ${port}!`))
 

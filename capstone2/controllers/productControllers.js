@@ -7,22 +7,21 @@ module.exports.createProduct = (request, response) => {
 
 	const userData = auth.decode(request.headers.authorization);
 
-	// console.log(userData);
-
-	if(userData.isAdmin){
+	if (userData.isAdmin) {
 
 		const newProduct = new Product({
 			name: request.body.name,
 			description: request.body.description,
+			img: request.body.img,
 			price: request.body.price,
 			isActive: request.body.isActive
 		})
 
 		newProduct.save()
-		.then(save => response.send(save))
-		.catch(error => response.send(false))
+			.then(save => response.send(save))
+			.catch(error => response.send(error))
 
-	}else{
+	} else {
 		return response.send(false)
 	}
 
@@ -32,20 +31,20 @@ module.exports.createProduct = (request, response) => {
 
 module.exports.getAllProducts = (request, response) => {
 
-	let userData; 
+	let userData;
 
-	try{
+	try {
 		userData = auth.decode(request.headers.authorization);
-	}catch(error){
+	} catch (error) {
 		return response.send(error.message);
 	}
 
-	if(userData.isAdmin){
+	if (userData.isAdmin) {
 		Product.find({})
-		.then(result => {
-			response.send(result);
-		}).catch(error => response.send(false))
-	}else{
+			.then(result => {
+				response.send(result);
+			}).catch(error => response.send(false))
+	} else {
 		return response.send(false)
 	}
 };
@@ -54,7 +53,7 @@ module.exports.getAllProducts = (request, response) => {
 
 module.exports.getAllActiveProducts = (request, response) => {
 
-		Product.find({isActive : true})
+	Product.find({ isActive: true })
 		.then(result => response.send(result))
 		.catch(error => response.send(false))
 }
@@ -64,8 +63,6 @@ module.exports.getAllActiveProducts = (request, response) => {
 module.exports.getSingleProducts = (request, response) => {
 
 	const productId = request.params.productId;
-	console.log(request.params)
-	console.log(productId)
 	Product.findById(productId)
 		.then(result => response.send(result))
 		.catch(error => response.send(error));
@@ -79,22 +76,23 @@ module.exports.updateProductInformation = (request, response) => {
 
 	const productId = request.params.productId;
 	const updatedProduct = {
-			name: request.body.name,
-			description: request.body.description,
-			price: request.body.price,
-		};
+		name: request.body.name,
+		description: request.body.description,
+		img: request.body.img,
+		price: request.body.price,
+	};
 
-	if(userData.isAdmin && productId){
+	if (userData.isAdmin && productId) {
 		Product.findByIdAndUpdate(productId, updatedProduct)
-		.then(result => {
-			if(result){
-				return response.send(result)
-			} else {
-				return response.send(false)
-			}
-		}).catch(error => response.send(false))
-	}else{
-		return response.send(false)
+			.then(result => {
+				if (result) {
+					return response.send(result)
+				} else {
+					return response.send("Product ID can't be found!")
+				}
+			}).catch(error => response.send(error))
+	} else {
+		return response.send("For admin user only!")
 	}
 }
 
@@ -104,13 +102,13 @@ module.exports.archiveProduct = (request, response) => {
 
 	const productId = request.params.productId;
 
-	if(userData.isAdmin && productId){
-		Product.findByIdAndUpdate(productId, {isActive : request.body.isActive}, {new:true})
-		.then(result => {
-			response.send(result)
-		})	
-		.catch(error => response.send(false))
-	}else{
+	if (userData.isAdmin && productId) {
+		Product.findByIdAndUpdate(productId, { isActive: request.body.isActive }, { new: true })
+			.then(result => {
+				response.send(result)
+			})
+			.catch(error => response.send(false))
+	} else {
 		return response.send(false)
 	}
 }
