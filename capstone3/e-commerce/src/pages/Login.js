@@ -78,36 +78,36 @@ export default function Login() {
 			})
 	}
 
-	return (
-
-		(user.id === null) ?
-
-			<Container className='mt-5'>
+	return user.id === null ? (
+		<div style={{ backgroundColor: "black", minHeight: '100vh' }}>
+			<Container>
 				<Row>
 					<Col className='col-6 mx-auto'>
-						<h1 className='text-center'>Login</h1>
+						<h1 className='text-center mt-5' style={{ color: "white" }}>Login</h1>
 						<Form onSubmit={event => login(event)}>
 							<Form.Group className="mb-3" controlId="formBasicEmail">
-								<Form.Label>Email address</Form.Label>
+								<Form.Label style={{ color: "white" }}>Email address</Form.Label>
 								<Form.Control type="email" value={email} onChange={event => setEmail(event.target.value)} placeholder="Enter email" />
 							</Form.Group>
 
 							<Form.Group className="mb-3" controlId="formBasicPassword1">
-								<Form.Label>Password</Form.Label>
+								<Form.Label style={{ color: "white" }}>Password</Form.Label>
 								<Form.Control type="password" value={password} onChange={event => setPassword1(event.target.value)} placeholder="Password" />
 							</Form.Group>
 
-							<p>No Account yet? <Link to='/register'>Sign up here.</Link></p>
+							<p style={{ color: "white" }}>No Account yet? <Link to='/register'>Create an account.</Link></p>
 
-							<Button variant="success" type="submit" disabled={isDisabled}>
+							<Button variant="light" type="submit" disabled={isDisabled}>
 								Login
 							</Button>
 						</Form>
 					</Col>
 				</Row>
-			</Container> :
+			</Container>
+		</div>
+	) : (
 
-			<Navigate to='/notFound' />
+		<Navigate to='/notFound' />
 
 	)
 }
