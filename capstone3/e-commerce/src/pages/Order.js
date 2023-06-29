@@ -2,6 +2,10 @@ import UserContext from '../UserContext';
 import { useState, useEffect, useContext } from 'react';
 import { Navigate } from 'react-router-dom';
 import { Container, Card } from 'react-bootstrap';
+import Announcement from '../components/Announcement';
+import AppNavBar from '../components/AppNavBar';
+import Newsletter from '../components/Newsletter';
+import Footer from '../components/Footer';
 
 export default function Order() {
   const { user } = useContext(UserContext);
@@ -24,14 +28,17 @@ export default function Order() {
       });
   }, []);
 
+
   return !user.isAdmin ? (
-    <Container>
-      <h1 className="text-center mt-3">Order</h1>
-      {order?.products?.map((product) => (
-        <Card className="mt-3 text-center" key={product._id}>
+    <>
+      <Announcement />
+      <AppNavBar />
+      <Container>
+        <h1 className="text-center mt-3">Order</h1>
+        <Card className="mb-5 mt-3 text-center">
           <Card.Body>
             <Card.Title>Name:</Card.Title>
-            <Card.Text>{product.productId?.name || ''}</Card.Text>
+            <Card.Text>{order?.products[0]?.productId?.name || ''}</Card.Text>
             <Card.Title>Items Purchased:</Card.Title>
             <Card.Text>{order?.products && order.products.length}</Card.Text>
             <Card.Title>Purchased On:</Card.Title>
@@ -42,8 +49,10 @@ export default function Order() {
             <Card.Text>{order?.totalAmount || 0}</Card.Text>
           </Card.Body>
         </Card>
-      ))}
-    </Container>
+      </Container>
+      <Newsletter />
+      <Footer />
+    </>
   ) : (
     <Navigate to="/notFound" />
   )
