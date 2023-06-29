@@ -97,7 +97,7 @@ module.exports.changeProductQuantities = (request, response) => {
 				} else {
 					return response.send("Product quantity has been changed!")
 				}
-			}).catch(error => response.send(false))
+			}).catch(error => response.send(error))
 	} else {
 		return response.send("For non-admin users only!")
 	}
