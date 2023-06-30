@@ -1,102 +1,129 @@
-*{
+* {
 	font-family: 'Roboto', sans-serif;
 	font-family: 'Wix Madefor Display', sans-serif;
 }
-body{
+
+body {
 	height: 100%;
 	font-size: 1rem;
 }
-nav{
-	background: white;
-	box-shadow: 0 10px 100px rgba(0,0,0,.1);
+
+nav {
+	box-shadow: 0 10px 100px rgba(0, 0, 0, .1);
 }
-html{
+
+html {
 	scroll-behavior: smooth;
 }
-#landing{
+
+.navbar-nav li.nav-item:hover {
+	border: 1px solid transparent;
+	transition: border-color 0.3s ease;
+	border-color: white;
+	background-color: gray;
+}
+
+#landing {
 	margin-top: 80px;
 	font-size: 1.25rem;
 	color: black;
 	padding: 80px;
 }
-.about{
-	background: rgb(243,243,243);
+
+.about {
+	background: rgb(243, 243, 243);
 	padding: 80px;
 }
+
 /* PROJECT SECTION */
-#project{
+#project {
 	padding: 80px;
 }
-.singleProject{
+
+.singleProject {
 	background: white;
 	border: 1px solid #eceff8;
 	border-radius: 5px;
 	padding: 25px;
-	margin:25px;
+	margin: 25px;
 	transition: all 0.3s ease-out;
 }
-.singleProject .projectIcon{
+
+.singleProject .projectIcon {
 	font-size: 60px;
 	color: #754ef9;
 	line-height: 56px;
 }
-.projectContent{
+
+.projectContent {
 	margin-top: 11px;
 }
-.projectTitle a{
+
+.projectTitle a {
 	font-size: 22px;
 	font-weight: 600;
 	color: #32333c;
 	margin-bottom: 20px;
-	transition:all 0.4s ease-out;
+	transition: all 0.4s ease-out;
 	text-decoration: none;
 }
-.projectTitle a:hover{
-	color:#754ef9;
-}
-.singleProject:hover{
-	box-shadow: 0px 21px 0px rgba(152,152,152,0.3);
 
-/* TOOL SECTION	*/
+.projectTitle a:hover {
+	color: #754ef9;
 }
-#tools{
-	background: rgb(243,243,243);
+
+.singleProject:hover {
+	box-shadow: 0px 21px 0px rgba(152, 152, 152, 0.3);
+
+	/* TOOL SECTION	*/
+}
+
+#tools {
+	background: rgb(243, 243, 243);
 	padding: 80px;
 }
-.toolsTitle{
+
+.toolsTitle {
 	margin-bottom: 3rem;
 }
-.toolsUsed{
+
+.toolsUsed {
 	padding: 1rem 2rem;
-    margin-bottom: 1.5rem;
-    margin-right: 1.5rem;
-    font-size: 1.6rem;
-    background: rgba(153,153,153,.2);
-    border-radius: 5px;
-    font-weight: 600;
-    color: #666;
+	margin-bottom: 1.5rem;
+	margin-right: 1.5rem;
+	font-size: 1.6rem;
+	background: rgba(153, 153, 153, .2);
+	border-radius: 5px;
+	font-weight: 600;
+	color: #666;
 }
+
 /* CONTACT SECTION */
-#contact{
+#contact {
 	padding: 80px;
 }
+
 /* FOOTER SECTION */
-.main-footer{
+.main-footer {
 	background: black;
 	color: white;
 }
-.main-footer{
-    padding: 80px;
+
+.main-footer {
+	padding: 80px;
 }
-.main-footer-row-2{
-    order: 1;
-    max-width: 50rem;
-    letter-spacing: 1px;
+
+.main-footer-row-2 {
+	order: 1;
+	max-width: 50rem;
+	letter-spacing: 1px;
 }
-.main-footer-row-1{
+
+.main-footer-row-1 {
 	order: 2;
 }
-.main-footer-icon{
+
+.main-footer-icon {
 	margin-right: 1.5rem;
 	width: 2rem;
 }
