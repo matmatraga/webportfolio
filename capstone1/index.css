@@ -70,16 +70,6 @@ html {
 	transition: all 0.3s ease-out;
 }
 
-/* .singleProject .projectIcon {
-	font-size: 60px;
-	color: #754ef9;
-	line-height: 56px;
-} */
-
-/* .projectContent {
-	margin-top: 11px;
-} */
-
 .projectTitle a {
 	font-size: 22px;
 	font-weight: 600;
